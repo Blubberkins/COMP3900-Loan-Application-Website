@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from packages import Packages # placeholder for retrieving package info file
+from login import User # placeholder for retrieving user info file
 
 app = Flask(__name__)
 
@@ -23,3 +24,16 @@ def searchPackage():
     irList = sorted(lvrList, key=lambda x: x['interest_rate'])
 
     return jsonify(irList)
+
+@app.route("/recommend",  methods=['POST'])
+def recommendPackage():
+
+    # retrieve package list and user loan preferences
+    packages = Packages.getList() # placeholder for retrieving package info function
+    preferences = User.getPreferences()  # placeholder for retrieving user loan preferences
+
+    # sort loan packages by the number of preferences they satisfy (descending)
+    # -> specifically, by the length of the intersection between the loan preferences and the keys of each loan package dictionary
+    preferenceList = sorted(packages, key=lambda p: len(set(preferences) & set(p.keys())), reverse=True)
+
+    return jsonify(preferenceList)
