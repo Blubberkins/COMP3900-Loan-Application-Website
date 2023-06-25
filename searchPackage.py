@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from packages import Packages # placeholder for retrieving package info file
 
 app = Flask(__name__)
@@ -22,4 +22,4 @@ def searchPackage():
     # sort loan packages by their interest rate (ascending)
     irList = sorted(lvrList, key=lambda x: x['interest_rate'])
 
-    return irList
+    return jsonify(irList)
