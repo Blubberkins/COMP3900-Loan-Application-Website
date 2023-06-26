@@ -5,7 +5,7 @@ import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { passwordSchema } from '../schemas/passwordSchema';
 
-const Register = () => {
+const RegisterC = () => {
   const navigate = useNavigate();
 
   const initialValues = {
@@ -187,4 +187,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default RegisterC;
