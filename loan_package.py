@@ -2,6 +2,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 
+from flask import Flask, request, jsonify
+
 # Fetch the service account key JSON file contents
 # i used my own firebase for testing but will need to get the key for the group one
 cred = credentials.Certificate('secret key.json')
@@ -9,17 +11,20 @@ cred = credentials.Certificate('secret key.json')
 # should change permissions for the thingo but idk how
 firebase_admin.initialize_app(cred, {'databaseURL': "https://comp3900-e4af5-default-rtdb.asia-southeast1.firebasedatabase.app/"})
 
+app = Flask(__name__)
+@app.route("/loan_package", method = ['Post'])
+
 # Main Functions
 def LP_new(loanInfo, ref):
     if (not LP_sanity(loanInfo)):
-        return "Failed Sanity Check"
+        return jsonify({'message': 'Failed Sanity Check'})
 
     ref.push().set(loanInfo)
-    return
+    return jsonify({'message': 'Success'})
 
 def LP_edit(loanInfo, loanName, ref):
     if (not LP_sanity(loanInfo)):
-        return "Failed Sanity Check"
+        return jsonify({'message': 'Failed Sanity Check'})
     
     loans = ref.get()
     found = False
@@ -30,16 +35,16 @@ def LP_edit(loanInfo, loanName, ref):
             found = True
     
     if (found):
-        return
+        return jsonify({'message': 'Success'})
     else:
-        return "Not Found"
+        return jsonify({'message': 'Package Not Found'})
 
 def LP_view(loanName, ref):
     loans = ref.get()
     for key, info in loans.items():
         if (info["loan_name"] == loanName):
-            return info
-    return "Not Found"
+            return jsonify({'message': info})
+    return jsonify({'message': 'Package Not Found'})
 
 def LP_set_ref(bankName):
     loc = "/Loan_Packages/" + bankName
@@ -68,4 +73,3 @@ def LP_sanity(loanInfo, ref):
         if (info["loan_name"] == loanInfo['loan_name']):
             return False
     return True
-
