@@ -12,17 +12,22 @@ cred = credentials.Certificate('secret key.json')
 firebase_admin.initialize_app(cred, {'databaseURL': "https://comp3900-e4af5-default-rtdb.asia-southeast1.firebasedatabase.app/"})
 
 app = Flask(__name__)
-@app.route("/loan_package", method = ['Post'])
 
 # Main Functions
-def LP_new(loanInfo, ref):
+@app.route("/new", method = ['Post'])
+def LP_new(ref):
+    loanInfo = LP_get()
     if (not LP_sanity(loanInfo)):
         return jsonify({'message': 'Failed Sanity Check'})
 
     ref.push().set(loanInfo)
     return jsonify({'message': 'Success'})
 
-def LP_edit(loanInfo, loanName, ref):
+@app.route("/edit", method = ['Post'])
+def LP_edit(loanName, ref):
+    loanName = request.form.get("loan_name")
+    loanInfo = LP_get()
+
     if (not LP_sanity(loanInfo)):
         return jsonify({'message': 'Failed Sanity Check'})
     
@@ -39,19 +44,33 @@ def LP_edit(loanInfo, loanName, ref):
     else:
         return jsonify({'message': 'Package Not Found'})
 
-def LP_view(loanName, ref):
+@app.route("/new", method = ['Get'])
+def LP_view(ref):
+    loanName = request.form.get("loan_name")
+
     loans = ref.get()
     for key, info in loans.items():
         if (info["loan_name"] == loanName):
             return jsonify({'message': info})
     return jsonify({'message': 'Package Not Found'})
 
+# Helpers
+
 def LP_set_ref(bankName):
     loc = "/Loan_Packages/" + bankName
     ref = db.reference(loc)
     return(ref)
 
-# Helpers
+def LP_get():
+    return {
+        "loan_name" : request.form.get("loan_name"),
+        "lvr" : request.form.get("lvr"),
+        "loan_purpose" : request.form.get("loan_purpose"),
+        "ir_type" : request.form.get("ir_type"),
+        "additional_payments" : request.form.get("additional_payments"),
+        "redraws" : request.form.get("redraws")
+    }
+
 def LP_sanity(loanInfo, ref):
     # ensure the loanInfo has all the fields correct
     if not isinstance(loanInfo['loan_name'], str):
