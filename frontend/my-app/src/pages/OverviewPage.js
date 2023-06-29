@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
+import axios from 'axios';
+
 import Package from '../components/Package';
 import PackageDetail from '../components/PackageDetail';
 import '../App.css';
@@ -11,20 +13,23 @@ Modal.setAppElement('#root');
 function OverviewPage() {
     const navigate = useNavigate();
     // modal is used for creating dialogs, lightboxes, popovers etc
-    // control appearance through differen tstates
+    // control appearance through different states
     const [modalIsOpen, setIsOpen] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState(null);
 
-    const packages = [
-        // examples
-        // how to integrate backend here? i want to make this dynamic
-        { id: 1, title: 'Loan Package 1', description: 'Loan Package Details' },
-        { id: 2, title: 'Loan Package 2', description: 'Loan Package Details' },
-        { id: 3, title: 'Loan Package 3', description: 'Loan Package Details' },
-        { id: 4, title: 'Loan Package 4', description: 'Loan Package Details' },
-        { id: 5, title: 'Loan Package 5', description: 'Loan Package Details' },
-        { id: 6, title: 'Loan Package 6', description: 'Loan Package Details' },
-    ];
+    const [packages, setPackages] = useState([]);
+
+    // data fetching from backend
+    // currently, i'm hosing locally (change according to port)
+    useEffect(() => {
+        axios.get('http://localhost:55375/view_all')
+        .then(res => {
+            setPackages(res.data.message);
+        })
+        .catch(err => {
+            console.error(err);
+        });
+    }, []);
 
 
     const openModal = (pkg) => {
@@ -38,7 +43,6 @@ function OverviewPage() {
 
     const handleLogout = () => {
         // backend logic on logout
-
         navigate('/');
     };
 
@@ -58,7 +62,7 @@ function OverviewPage() {
         // these are utility classes provided by tailwind css
         <div className="flex flex-col h-screen">
             <header className="flex items-center justify-between p-6 bg-blue-500">
-                <h1 className="text-2xl font-bold text-white">What is our bank's name?</h1>
+                <h1 className="text-2xl font-bold text-white">Carbon Bank</h1>
                 <div>
                     <button onClick={handleAddNew} className="mr-6 bg-white px-4 py-2 rounded shadow text-blue-500 font-semibold">Add New Package</button>
                     <button onClick={handleLogout} className="bg-white px-4 py-2 rounded shadow text-blue-500 font-semibold">Logout</button>
@@ -70,10 +74,14 @@ function OverviewPage() {
             </div>
             <div className="overflow-y-scroll">
                 <div className="grid grid-cols-2 gap-6 p-6">
-                    {packages.map((pkg) => (
-                        <div key={pkg.id} className="bg-white rounded shadow p-6" onClick={() => openModal(pkg)}>
-                            <h2 className="font-bold text-xl">{pkg.title}</h2>
-                            <p className="mt-2">{pkg.description}</p>
+                    {packages.map((pkg, index) => (
+                        <div key={index} className="bg-white rounded shadow p-6" onClick={() => openModal(pkg)}>
+                            <h2 className="font-bold text-xl">{pkg.loan_name}</h2>
+                            <p className="mt-2">Loan to value ratio: {pkg.lvr}</p>
+                            <p className="mt-2">Loan purpose: {pkg.loan_purpose}</p>
+                            <p className="mt-2">Interest rate type: {pkg.ir_type}</p>
+                            <p className="mt-2">Additional payments: {pkg.additional_payments ? "Yes" : "No"}</p>
+                            <p className="mt-2">Redraws: {pkg.redraws ? "Yes" : "No"}</p>
                         </div>
                     ))}
                 </div>
@@ -103,9 +111,13 @@ function OverviewPage() {
                     <h2 className="font-bold text-xl mt-3">{selectedPackage?.title}</h2>
                 </div>
                 <div className="mt-3">
-                    <p className="mt-2">{selectedPackage?.description}</p>
+                    <p className="mt-2">Loan to value ratio: {selectedPackage?.lvr}</p>
+                    <p className="mt-2">Loan purpose: {selectedPackage?.loan_purpose}</p>
+                    <p className="mt-2">Interest rate type: {selectedPackage?.ir_type}</p>
+                    <p className="mt-2">Additional payments: {selectedPackage?.additional_payments ? "Yes" : "No"}</p>
+                    <p className="mt-2">Redraws: {selectedPackage?.redraws ? "Yes" : "No"}</p>
                 </div>
-                </Modal>
+            </Modal>
         </div>
     );
 }
