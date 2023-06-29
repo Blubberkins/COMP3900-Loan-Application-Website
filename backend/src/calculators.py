@@ -7,12 +7,12 @@ def repay_calc(principal, interest, duration, frequency, type):
     principal remaining per year
     
     Arguments:
-        principal(int) - the amount borrowed
-        interest(float) - the interest rate for the package
-        duration(int) - the duration of the loan
-        frequency(string) - the frequency at which the repayments are made
+        principal(int) - The amount borrowed
+        interest(float) - Interest rate on the loan per year
+        duration(int) - Loan duration in years
+        frequency(string) - Frequency at which the repayments are made
                             monthly, fortnightly, weekly
-        type (int) - repayment type given as number of interest only years
+        type (int) - Repayment type given as number of interest only years
         
     Exceptions:
         Input Error - 
@@ -20,9 +20,9 @@ def repay_calc(principal, interest, duration, frequency, type):
     Return Value:
         Returns a dictionary with the following:
 
-        repay_value(int): The repayment value over the given period of time
-        repay_total(int): The total value of the loan repayments
-        repay_interest(int): The total value of the interest on the loan
+        repay_value(int): Repayment value over the given period of time
+        repay_total(int): Total value of the loan repayments
+        repay_interest(int): Total value of the interest on the loan
         repay_graph: A list of coordinates for a graph displaying principal over time
     '''
 
@@ -61,13 +61,13 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
     mortgage is paid off, principal remaining per year, and interest difference
     
     Arguments:
-        principal(int) - the amount borrowed
-        interest(float) - the interest rate for the package
-        duration(int) - the duration of the loan
-        frequency(string) - the frequency at which the repayments are made
+        principal(int) - The amount borrowed
+        interest(float) - Interest rate for the package per year
+        duration(int) - Loan duration in years
+        frequency(string) - Frequency at which the repayments are made
                             monthly, fortnightly, weekly
-        type (int) - repayment type given as number of interest only years
-        extra (int) - extra payment per period of time
+        type (int) - Repayment type given as number of interest only years
+        extra (int) - Extra payment per period of time
         
     Exceptions:
         Input Error - 
@@ -119,6 +119,30 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
 
 def borrow_calc(joint, no_dependents, income, rental_income, other_income,
                 living_expenses, loans, credit_limit, interest, duration):
+    '''
+    Given the inputs, calculates the maximum amount that can be borrowed over
+    the duration of the loan by determining the monthly surplus
+    
+    Arguments:
+        joint(int) - Whether the loan is joint or not (0 for false, 1 for true)
+        no_dependents(int) - Number of dependents
+        income(int) - Income earned before tax per year
+        rental_income(int) - Rental income per month
+        other_income(int) - Other income (bonus, overtime, dividends) per year
+        living_expenses(int) - Estimated living expenses per month
+        loan(int) - Loan repayments per month
+        credit_limit(int) - Total credit card limit
+        interest(float) - Interest rate on the loan per year
+        duration(int) - Loan duration in years
+        
+    Exceptions:
+        Input Error - 
+
+    Return Value:
+        Returns a dictionary with the following:
+
+        borrowing_power(int): The estimated max borrowing amount over the duration
+    '''
 
     # Monthly surplus = Gross income - (tax + expenses)
 
@@ -140,7 +164,11 @@ def borrow_calc(joint, no_dependents, income, rental_income, other_income,
     r = interest/1200
     n = duration*12
 
-    return max(0, do_borrow_calc(r, n ,a))
+    borrowing_power = max(0, do_borrow_calc(r, n ,a))
+
+    return {
+        'borrowing_power': int(borrowing_power) 
+    }
 
 # Converts frequency string to int
 def conv_freq(frequency):
