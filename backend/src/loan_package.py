@@ -6,10 +6,11 @@ from flask import Flask, request, jsonify
 
 # Fetch the service account key JSON file contents
 # i used my own firebase for testing but will need to get the key for the group one
-cred = credentials.Certificate('secret key.json')
+cred_obj = firebase_admin.credentials.Certificate('carbon-532ae-firebase-adminsdk-493c2-fe662c3d14.json')
 # Initialize the app with a service account, granting admin privileges
 # should change permissions for the thingo but idk how
-firebase_admin.initialize_app(cred, {'databaseURL': "https://comp3900-e4af5-default-rtdb.asia-southeast1.firebasedatabase.app/"})
+default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': 'https://carbon-532ae-default-rtdb.asia-southeast1.firebasedatabase.app/'})
+
 
 app = Flask(__name__)
 
