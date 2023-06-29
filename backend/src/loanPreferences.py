@@ -1,13 +1,20 @@
 from flask import Flask, request, jsonify
-from login import User # placeholder for retrieving user info file
+import firebase_admin
+from firebase_admin import db
+
+# getting a reference to the firebase account and database
+cred_obj = firebase_admin.credentials.Certificate('....path to file')
+default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': databaseURL})
+
 
 app = Flask(__name__)
 
+# ask user for their loan preferences and update them in the database
 @app.route("/preferences",  methods=['POST'])
 def loanPreferences():
 
-    # retrieve user info
-    user = User.getUser() # placeholder for retrieving user info function
+    # retrieve user loan preferences from database
+    ref = db.reference("/User/Preferences")
     
     # get user input for loan purpose (live-in/investment), ir type (fixed/variable),
     # ability to make additional payments (Y/N), and access to redraws (Y/N)
@@ -16,11 +23,16 @@ def loanPreferences():
     additional_payments = request.form.get('additional_payments')
     redraws = request.form.get('redraws')
 
-    # set user preferences to the new ones (using preferences placeholder)
-    user.preferences['loan_purpose'] = loan_purpose
-    user.preferences['ir_type'] = ir_type
-    user.preferences['additional_payments'] = additional_payments
-    user.preferences['redraws'] = redraws
+    # compile preferences into dictionary format
+    newPreferences = {
+        "loan_purpose": loan_purpose,
+        "ir_type": ir_type,
+        "additional_payments": additional_payments,
+        "redraws": redraws,
+    }
 
-    # return the new user preferences
-    return jsonify(user.preferences)
+    # update the database with the new loan preferences
+    ref.update(newPreferences)
+
+    # return success message when complete
+    return jsonify({'message': 'Success'})

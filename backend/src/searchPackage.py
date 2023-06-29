@@ -1,14 +1,21 @@
 from flask import Flask, request, jsonify
 import loan_package
-from login import User # placeholder for retrieving user info file
+import json
+import firebase_admin
+from firebase_admin import db
+
+# getting a reference to the firebase account and database
+cred_obj = firebase_admin.credentials.Certificate('....path to file')
+default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': databaseURL})
 
 app = Flask(__name__)
 
+# returns list of packages sorted by interest rate, excluding packages based on their LVRs
 @app.route("/search",  methods=['POST'])
 def searchPackage():
 
     # retrieve package list
-    packages = Packages.getList() # placeholder for retrieving package info function
+    packages = json.dumps(loan_package.LP_view_all())
     
     # get user input for estimated property value and borrowing amount
     estimated_value = float(request.form.get('estimated_value'))
@@ -25,12 +32,16 @@ def searchPackage():
 
     return jsonify(irList)
 
+# returns list of packages sorted by the number of user loan preferences they satisfy
 @app.route("/recommend",  methods=['POST'])
 def recommendPackage():
 
-    # retrieve package list and user loan preferences
-    packages = Packages.getList() # placeholder for retrieving package info function
-    preferences = User.getPreferences()  # placeholder for retrieving user loan preferences
+    # retrieve package list
+    packages = json.dumps(loan_package.LP_view_all())
+    
+    # retrieve user loan preferences from database
+    ref = db.reference("/User/Preferences")
+    preferences = ref.get()
 
     # sort loan packages by the number of preferences they satisfy (descending)
     # -> specifically, by the length of the intersection between the loan preferences and the keys of each loan package dictionary
