@@ -37,7 +37,7 @@ def repay_calc(principal, interest, duration, frequency, type):
 
     # Formula for interest only repayment is
     # A = P(r/n)
-    repay_total = repay_value*n + principal*type*r
+    repay_total = repay_value*n + principal*type*interest/100
     repay_interest = repay_total - principal
 
     # Determine the principal value after every year and add the coordinate
@@ -49,9 +49,9 @@ def repay_calc(principal, interest, duration, frequency, type):
         repay_graph.append((year, int(p)))
 
     return {
-        'repay_value': int(repay_value),
-        'repay_total': int(repay_total),
-        'repay_interest': int(repay_interest),
+        'repay_value': round(repay_value, 2),
+        'repay_total': round(repay_total, 2),
+        'repay_interest': repay_interest,
         'repay_graph' : repay_graph,
     }  
 
@@ -87,9 +87,9 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
     n = (duration - type)*freq
 
     repay_value = do_repay_calc(principal, r, n)
-    repay_total = repay_value*n + principal*type*r
+    repay_total = repay_value*n + principal*type*interest/100
     
-    extra_value = do_repay_calc(principal, r, n) + extra
+    extra_value = repay_value + extra
 
     extra_graph = []
     p = principal
@@ -105,13 +105,13 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
         if p > 0: time += 1
 
     extra_total = extra_value*time + p*(1 + r) + principal*type*r
-    interest_diff = extra_total - repay_total
+    interest_diff = repay_total - extra_total
 
-    years = int(time / frequency)
-    months = math.ceil(time % frequency)
+    years = int(time / freq)
+    months = math.ceil(time % freq)
 
     return {
-        'interest_diff': int(interest_diff),
+        'interest_diff': round(interest_diff, 2),
         'years': years,
         'months': months,
         'extra_graph': extra_graph
@@ -147,8 +147,8 @@ def borrow_calc(joint, no_dependents, income, rental_income, other_income,
     # Monthly surplus = Gross income - (tax + expenses)
 
     # Gross income = Income + 0.8 * rental income + other
-    gross_income = income/12 + 0.8*rental_income + other_income/12
-    tax = calc_tax(gross_income*12)
+    gross_income = income + 0.8*rental_income*12 + other_income
+    tax = calc_tax(gross_income)
 
     # Expenses = max(estimated living expenses, HEM) + loans + 0.025 * total credit limit
 
@@ -158,9 +158,9 @@ def borrow_calc(joint, no_dependents, income, rental_income, other_income,
     hem = [[1306, 1701, 2085, 2514, 2943, 3372, 3801],
            [2971, 3273, 3511, 3775, 4039, 4303, 4567]]
     
-    expenses = max(living_expenses, hem[joint, no_dependents]) + loans + 0.025 * credit_limit
+    expenses = max(living_expenses, hem[joint][no_dependents]) + loans + 0.025 * credit_limit
 
-    a = gross_income - tax - expenses 
+    a = (gross_income - tax)/12 - expenses 
     r = interest/1200
     n = duration*12
 
@@ -186,7 +186,7 @@ def do_repay_calc(p, r, n):
     # Formula for principal + interest repayment is
     # A = P[ r(1 + r)^n ] / [ (1 + r)^n - 1 ]
 
-    return p * ((r * (1 + r)^n) / ((1 + r)^n - 1))
+    return p * ((r * (1 + r)**n) / ((1 + r)**n - 1))
 
 # Calculates principal amount given initial principal,
 # interest rate, number of payment periods, and repayment
@@ -195,7 +195,7 @@ def do_principal_calc(p, r, n, a):
     # Formula for remainining principal is:
     # P' = P(1 + r)^n - A[ (1 + r)^n - 1 ]/r
 
-    return p * (1 + r)^n - (a * ((1 + r)^n - 1)) / r
+    return p * (1 + r)**n - (a/r) * ((1 + r)**n - 1)
 
 # Calculates borrowing power given interest rate,
 # number of payment periods, and payment amount per period
@@ -203,9 +203,9 @@ def do_borrow_calc(r, n, a):
     # Formula for max principal is:
     # P =  A[ (1 + r)^n - 1 ]/[ r * (1 + r)^n ]
 
-    return (a * ((1 + r)^n - 1))/(r * (1 + r)^n)
+    return (a * ((1 + r)**n - 1))/(r * (1 + r)**n)
 
-# Calculates tax/month for an income/year input
+# Calculates tax/year for an income/year input
 def calc_tax(income):
     # Tax brackets:
     # 0 for under $18,200
@@ -214,15 +214,15 @@ def calc_tax(income):
     # $29,427 + 37c/$ for $120,001 to $180,000
     # $51,667 + 45c/$ for $180,000 +
 
-    if 12 * income <= 18200:
+    if income <= 18200:
         tax = 0
-    elif 12 * income <= 45000:
-        tax = 0.19 * income
-    elif 12 * income <= 120000:
-        tax = 5092/12 + 0.325 * income
-    elif 12 * income <= 180000:
-        tax = 29427/12 + 0.37 * income
+    elif income <= 45000:
+        tax = 0.19 * (income - 18200)
+    elif income <= 120000:
+        tax = 5092 + 0.325 * (income - 45000)
+    elif income <= 180000:
+        tax = 29427 + 0.37 * (income - 120000)
     else:
-        tax = 51667/12 + 0.45 * income
+        tax = 51667 + 0.45 * (income - 180000)
 
     return tax
