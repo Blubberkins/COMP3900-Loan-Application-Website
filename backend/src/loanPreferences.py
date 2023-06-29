@@ -3,9 +3,8 @@ import firebase_admin
 from firebase_admin import db
 
 # getting a reference to the firebase account and database
-cred_obj = firebase_admin.credentials.Certificate('....path to file')
-default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': databaseURL})
-
+cred_obj = firebase_admin.credentials.Certificate('carbon-532ae-firebase-adminsdk-493c2-fe662c3d14.json')
+default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': 'https://carbon-532ae-default-rtdb.asia-southeast1.firebasedatabase.app/'})
 
 app = Flask(__name__)
 
