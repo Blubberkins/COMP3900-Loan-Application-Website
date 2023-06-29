@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from packages import Packages # placeholder for retrieving package info file
+import loan_package
 from login import User # placeholder for retrieving user info file
 
 app = Flask(__name__)
