@@ -46,7 +46,7 @@ def LP_edit():
     else:
         return jsonify({'message': 'Package Not Found'})
 
-@app.route("/new", method = ['Get'])
+@app.route("/view", method = ['Get'])
 def LP_view():
     ref = LP_set_ref(request.form.get("bank_name"))
     loanName = request.form.get("loan_name")
@@ -56,6 +56,12 @@ def LP_view():
         if (info["loan_name"] == loanName):
             return jsonify({'message': info})
     return jsonify({'message': 'Package Not Found'})
+
+@app.route("/view_all", method = ['Get'])
+def LP_view_all():
+    ref = LP_set_ref(request.form.get("bank_name"))
+    loans = ref.get()
+    return jsonify({f'message': loans})
 
 # Helpers
 
