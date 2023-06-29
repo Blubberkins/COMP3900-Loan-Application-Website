@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
+import {auth} from '../firebase';
+import {  signOut } from "firebase/auth";
 import Package from '../components/Package';
 import PackageDetail from '../components/PackageDetail';
 import '../App.css';
@@ -14,6 +16,8 @@ function OverviewPage() {
     // control appearance through differen tstates
     const [modalIsOpen, setIsOpen] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState(null);
+
+
 
     const packages = [
         // examples
@@ -36,11 +40,15 @@ function OverviewPage() {
         setIsOpen(false);
     };
 
-    const handleLogout = () => {
-        // backend logic on logout
-
-        navigate('/');
-    };
+    const handleLogout = () => {               
+        signOut(auth).then(() => {
+        // Sign-out successful.
+            navigate("/");
+            console.log("Signed out successfully")
+        }).catch((error) => {
+        // An error happened.
+        });
+    }
 
     const handleAddNew = () => {
         // backend logic on adding new package
