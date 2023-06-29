@@ -49,9 +49,9 @@ def repay_calc(principal, interest, duration, frequency, type):
         repay_graph.append((year, int(p)))
 
     return {
-        'repay_value': round(repay_value, 2),
-        'repay_total': round(repay_total, 2),
-        'repay_interest': repay_interest,
+        'repay_value': math.ceil(repay_value),
+        'repay_total': math.ceil(repay_total),
+        'repay_interest': math.ceil(repay_interest),
         'repay_graph' : repay_graph,
     }  
 
@@ -89,29 +89,34 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
     repay_value = do_repay_calc(principal, r, n)
     repay_total = repay_value*n + principal*type*interest/100
     
-    extra_value = repay_value + extra
+    extra_value = math.ceil(repay_value + extra)
 
     extra_graph = []
     p = principal
     time = 0
     while p > extra_value*(1 + r):
-        p = do_principal_calc(p, r, time, extra_value)
+        p = do_principal_calc(principal, r, time, extra_value)
 
         # Only add the point to the graph after a year,
         # or for the last payment
-        if (time % freq) == 0 or p <= extra_value*(1 + r):
+        if (time % freq) == 0 and p > extra_value*(1 + r):
             extra_graph.append((time/freq, int(p)))
+        elif p <= extra_value*(1 + r):
+            extra_graph.append((time/freq, 0))
 
-        if p > 0: time += 1
+        if p > extra_value*(1 + r): time += 1
 
     extra_total = extra_value*time + p*(1 + r) + principal*type*r
     interest_diff = repay_total - extra_total
 
     years = int(time / freq)
-    months = math.ceil(time % freq)
+    if p != 0:
+        months = time % freq + 1
+    else:
+        months = time % freq
 
     return {
-        'interest_diff': round(interest_diff, 2),
+        'interest_diff': math.ceil(interest_diff),
         'years': years,
         'months': months,
         'extra_graph': extra_graph
