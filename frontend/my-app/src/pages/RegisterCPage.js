@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, getAuth} from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { passwordSchema } from '../schemas/passwordSchema';
@@ -18,9 +18,17 @@ const RegisterC = () => {
 
   const onSubmit = async (values) => {
     try {
-      await createUserWithEmailAndPassword(auth, values.email, values.password);
-      // Additional code to save first name, last name, and username to the user profile or database
-      navigate('/login');
+      await createUserWithEmailAndPassword(auth, values.email, values.password)
+      signInWithEmailAndPassword(auth, values.email, values.password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        console.log(user)
+        window.sessionStorage.setItem('isLogged', true);
+        console.log(user);
+      })
+
+      navigate('/home');
     } catch (error) {
       console.error('Registration failed', error);
     }

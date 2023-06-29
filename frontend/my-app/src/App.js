@@ -13,21 +13,25 @@ import AccountTypePage from './pages/AccountTypePage';
 import RegisterB from './pages/RegisterBPage';
 import ProtectedRoute from './pages/ProtectedRoute';
 
+import BusinessHomePage from './pages/BusinessHome';
+
 function App() {
   return (
     <div className="">
       <BrowserRouter>
         <Routes>
-            <Route path="/home" element={<ProtectedRoute> <HomePage/> </ProtectedRoute>} />
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/RegisterC" element={<RegisterC />}></Route>
             <Route path="/RegisterB" element={<RegisterB />}></Route>
+            <Route path="/home" element={<ProtectedRoute> <HomePage/> </ProtectedRoute>} />
             <Route path="/SignUp" element={<AccountTypePage />}></Route>
             <Route path="/overview" element={<OverviewPage />} />
             <Route path="/edit-package/:packageId" element={<div />} />
             <Route path="/home-loan" element={<HomeLoanPage/>} />
             <Route path="/loan-results" element={<LoanResultsPage />} />
             <Route path="/appointment" element={<div />}/>
+            <Route path="/businessHome" element={<BusinessHomePage />} />
+
 
         </Routes>
       </BrowserRouter>

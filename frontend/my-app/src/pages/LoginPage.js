@@ -17,9 +17,13 @@ const LoginPage = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        console.log(user)
         window.sessionStorage.setItem('isLogged', true);
         setAuthenticated(true);
-        navigate('/home');
+        if (user.displayName == "business") {
+          navigate('/businessHome');
+        }
+        else {navigate('/home');}
         console.log(user);
       })
       .catch((error) => {

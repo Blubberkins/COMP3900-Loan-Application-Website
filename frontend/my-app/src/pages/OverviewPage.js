@@ -45,6 +45,7 @@ function OverviewPage() {
         // Sign-out successful.
             navigate("/");
             console.log("Signed out successfully")
+            window.sessionStorage.setItem('isLogged', false);
         }).catch((error) => {
         // An error happened.
         });

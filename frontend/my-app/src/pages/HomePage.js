@@ -10,8 +10,9 @@ const Home = () => {
     const handleLogout = () => {               
         signOut(auth).then(() => {
         // Sign-out successful.
-            navigate("/");
+            navigate("/login");
             console.log("Signed out successfully")
+            window.sessionStorage.setItem('isLogged', false);
         }).catch((error) => {
         // An error happened.
         });
