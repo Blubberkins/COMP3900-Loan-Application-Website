@@ -78,7 +78,7 @@ def LP_get():
         "redraws" : request.form.get("redraws")
     }
 
-def LP_sanity(loanInfo, ref):
+def LP_sanity(loanInfo):
     # ensure the loanInfo has all the fields correct
     if not isinstance(loanInfo['loan_name'], str):
         return False
@@ -93,9 +93,14 @@ def LP_sanity(loanInfo, ref):
     if not isinstance(loanInfo['redraws'], bool):
         return False
     
-    # ensure that loans cannot have the same name
+    ref = LP_set_ref()
     loans = ref.get()
+    # ensure that the database is not empty before first insertion
+    if loans == None:
+        return True
+    # ensure that loans cannot have the same name
     for key, info in loans.items():
         if (info["loan_name"] == loanInfo['loan_name']):
             return False
+    
     return True
