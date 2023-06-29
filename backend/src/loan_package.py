@@ -16,7 +16,7 @@ app = Flask(__name__)
 # Main Functions
 @app.route("/new", method = ['Post'])
 def LP_new():
-    ref = LP_set_ref(request.form.get("bank_name"))
+    ref = LP_set_ref()
     loanInfo = LP_get()
     if (not LP_sanity(loanInfo)):
         return jsonify({'message': 'Failed Sanity Check'})
@@ -26,7 +26,7 @@ def LP_new():
 
 @app.route("/edit", method = ['Post'])
 def LP_edit():
-    ref = LP_set_ref(request.form.get("bank_name"))
+    ref = LP_set_ref()
     loanName = request.form.get("loan_name")
     loanInfo = LP_get()
 
@@ -48,7 +48,7 @@ def LP_edit():
 
 @app.route("/view", method = ['Get'])
 def LP_view():
-    ref = LP_set_ref(request.form.get("bank_name"))
+    ref = LP_set_ref()
     loanName = request.form.get("loan_name")
 
     loans = ref.get()
@@ -59,16 +59,14 @@ def LP_view():
 
 @app.route("/view_all", method = ['Get'])
 def LP_view_all():
-    ref = LP_set_ref(request.form.get("bank_name"))
+    ref = LP_set_ref()
     loans = ref.get()
     return jsonify({f'message': loans})
 
 # Helpers
 
-def LP_set_ref(bankName):
-    loc = "/Loan_Packages/" + bankName
-    ref = db.reference(loc)
-    return(ref)
+def LP_set_ref():
+    return db.reference("/CarbonBank/Loan_Packages")
 
 def LP_get():
     return {
