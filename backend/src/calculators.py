@@ -117,9 +117,32 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
         'extra_graph': extra_graph
     }
 
-#def borrow_calc(no_people, no_child, no_adult, type, income, expenses, interest, duration):
+def borrow_calc(joint, no_dependents, income, rental_income, other_income,
+                living_expenses, loans, credit_limit, interest, duration):
 
+    # Monthly surplus = Gross income - (tax + expenses)
 
+    # Gross income = Income + 0.8 * rental income + other
+    gross_income = income/12 + 0.8*rental_income + other_income/12
+    tax = calc_tax(gross_income*12)
+
+    # Expenses = max(estimated living expenses, HEM) + loans + 0.025 * total credit limit
+
+    # HEM is the estimated living expenses for a family of the given size
+    # First array is not joint, +1 dependent for each column
+    # Second array is joint, +1 dependent for each column
+    hem = [[1306, 1701, 2085, 2514, 2943, 3372, 3801],
+           [2971, 3273, 3511, 3775, 4039, 4303, 4567]]
+    
+    expenses = max(living_expenses, hem[joint, no_dependents]) + loans + 0.025 * credit_limit
+
+    a = gross_income - tax - expenses 
+    r = interest/1200
+    n = duration*12
+
+    return max(0, do_borrow_calc(r, n ,a))
+
+# Converts frequency string to int
 def conv_freq(frequency):
 
     if frequency == "monthly":
@@ -128,15 +151,50 @@ def conv_freq(frequency):
         return 26
     elif frequency == "weekly":
         return 52
-    
+
+# Calculates repayment amount given initial principal,
+# interest rate, and number of payment periods    
 def do_repay_calc(p, r, n):
     # Formula for principal + interest repayment is
     # A = P[ r(1 + r)^n ] / [ (1 + r)^n - 1 ]
 
     return p * ((r * (1 + r)^n) / ((1 + r)^n - 1))
 
+# Calculates principal amount given initial principal,
+# interest rate, number of payment periods, and repayment
+# amount
 def do_principal_calc(p, r, n, a):
     # Formula for remainining principal is:
     # P' = P(1 + r)^n - A[ (1 + r)^n - 1 ]/r
 
     return p * (1 + r)^n - (a * ((1 + r)^n - 1)) / r
+
+# Calculates borrowing power given interest rate,
+# number of payment periods, and payment amount per period
+def do_borrow_calc(r, n, a):
+    # Formula for max principal is:
+    # P =  A[ (1 + r)^n - 1 ]/[ r * (1 + r)^n ]
+
+    return (a * ((1 + r)^n - 1))/(r * (1 + r)^n)
+
+# Calculates tax/month for an income/year input
+def calc_tax(income):
+    # Tax brackets:
+    # 0 for under $18,200
+    # 19c/$ for $18,200 to $45,000
+    # $5092 + 32.5c/$ for $45,001 to $120,000
+    # $29,427 + 37c/$ for $120,001 to $180,000
+    # $51,667 + 45c/$ for $180,000 +
+
+    if 12 * income <= 18200:
+        tax = 0
+    elif 12 * income <= 45000:
+        tax = 0.19 * income
+    elif 12 * income <= 120000:
+        tax = 5092/12 + 0.325 * income
+    elif 12 * income <= 180000:
+        tax = 29427/12 + 0.37 * income
+    else:
+        tax = 51667/12 + 0.45 * income
+
+    return tax
