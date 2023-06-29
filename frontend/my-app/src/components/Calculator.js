@@ -8,12 +8,16 @@ export const Calculator = () => {
     numPeopleSupport: "",
     propertyType: "",
     income: "",
+    incomePeriod: "",
     expense: "",
+    expensePeriod: "",
   };
 
   const [borrowAmount, setBorrowAmount] = useState(30000);
 
-  const onSubmit = async (values) => {};
+  const onSubmit = async (values) => {
+    console.log(values)
+  };
 
   const validate = (values) => {
     const errors = {};
@@ -50,32 +54,31 @@ export const Calculator = () => {
                 How many people are applying?
               </h3>
               <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-                <input
-                  id="bordered-checkbox-1"
+                <Field
+                  id="numPeopleApply"
                   type="checkbox"
-                  value=""
-                  name="bordered-checkbox"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  value="1"
+                  name="numPeopleApply"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"               
                 />
                 <label
                   for="bordered-checkbox-1"
-                  class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   one
                 </label>
               </div>
-              <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+              <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
                 <input
-                  checked
-                  id="bordered-checkbox-2"
+                  id="numPeopleApply"
                   type="checkbox"
-                  value=""
-                  name="bordered-checkbox"
+                  value="2"
+                  name="numPeopleApply"
                   class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                   for="bordered-checkbox-2"
-                  class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   two
                 </label>
@@ -87,8 +90,8 @@ export const Calculator = () => {
               </h3>
               <Field
                 type="text"
-                name="firstName"
-                id="firstName"
+                name="numPeopleSupport"
+                id="numPeopleSupport"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder=""
                 required
@@ -99,32 +102,31 @@ export const Calculator = () => {
                 What type of property are you looking to buy?
               </h3>
               <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-                <input
-                  id="bordered-checkbox-1"
+                <Field
+                  id="propertyType"
                   type="checkbox"
-                  value=""
-                  name="bordered-checkbox"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  value="A home"
+                  name="propertyType"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                   for="bordered-checkbox-1"
-                  class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   A home
                 </label>
               </div>
-              <div class="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
-                <input
-                  checked
-                  id="bordered-checkbox-2"
+              <div className="flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700">
+                <Field
+                  id="propertyType"
                   type="checkbox"
-                  value=""
-                  name="bordered-checkbox"
-                  class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                  value="A Investment property"
+                  name="propertyType"
+                  className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                 />
                 <label
                   for="bordered-checkbox-2"
-                  class="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+                  className="w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
                 >
                   An Investment property
                 </label>
@@ -134,15 +136,15 @@ export const Calculator = () => {
               <h3 className="text-xl col-span-2">What is your income?</h3>
               <Field
                 type="text"
-                name="firstName"
-                id="firstName"
+                name="income"
+                id="income"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder=""
                 required
               />
               <Field
                 as="select"
-                name="color"
+                name="incomePeriod"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               >
                 <option value="year">Year</option>
@@ -154,15 +156,15 @@ export const Calculator = () => {
               <h3 className="text-xl col-span-2">What are your expenses?</h3>
               <Field
                 type="text"
-                name="firstName"
-                id="firstName"
+                name="expense"
+                id="expense"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder=""
                 required
               />
               <Field
                 as="select"
-                name="color"
+                name="expensePeriod"
                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
               >
                 <option value="year">Year</option>
