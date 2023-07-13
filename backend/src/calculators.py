@@ -13,9 +13,6 @@ def repay_calc(principal, interest, duration, frequency, type):
         frequency(string) - Frequency at which the repayments are made
                             monthly, fortnightly, weekly
         type (int) - Repayment type given as number of interest only years
-        
-    Exceptions:
-        Input Error - 
 
     Return Value:
         Returns a dictionary with the following:
@@ -45,8 +42,9 @@ def repay_calc(principal, interest, duration, frequency, type):
     repay_graph = []
     p = principal
     for year in range(duration + 1):
-        p = do_principal_calc(p, r, freq, repay_value)
-        repay_graph.append((year, int(p)))
+        if year > type:
+            p = do_principal_calc(p, r, freq, repay_value)
+        repay_graph.append((int(year), int(p)))
 
     return {
         'repay_value': math.ceil(repay_value),
@@ -69,9 +67,6 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
         type (int) - Repayment type given as number of interest only years
         extra (int) - Extra payment per period of time
         
-    Exceptions:
-        Input Error - 
-
     Return Value:
         Returns a dictionary with the following:
 
@@ -95,7 +90,8 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
     p = principal
     time = 0
     while p > extra_value*(1 + r):
-        p = do_principal_calc(principal, r, time, extra_value)
+        if time/freq > type:
+            p = do_principal_calc(principal, r, time - type*freq, extra_value)
 
         # Only add the point to the graph after a year,
         # or for the last payment
@@ -106,14 +102,23 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
 
         if p > extra_value*(1 + r): time += 1
 
-    extra_total = extra_value*time + p*(1 + r) + principal*type*r
+    extra_total = extra_value*(time - type*freq) + p*(1 + r) + principal*type*interest/100
     interest_diff = repay_total - extra_total
 
     years = int(time / freq)
+
+    # Months will contain the number of extra payment
+    # periods in the last year. An extra payment will be required
+    # if the principal is not yet 0. Then this value can be
+    # converted to months.
+    months = time % freq
     if p != 0:
-        months = time % freq + 1
-    else:
-        months = time % freq
+        months += 1
+
+    if frequency == "fortnightly":
+        months = months/2
+    if frequency == "weekly":
+        months = months/4
 
     return {
         'interest_diff': math.ceil(interest_diff),
@@ -139,9 +144,6 @@ def borrow_calc(joint, no_dependents, income, rental_income, other_income,
         credit_limit(int) - Total credit card limit
         interest(float) - Interest rate on the loan per year
         duration(int) - Loan duration in years
-        
-    Exceptions:
-        Input Error - 
 
     Return Value:
         Returns a dictionary with the following:
@@ -180,7 +182,7 @@ def conv_freq(frequency):
 
     if frequency == "monthly":
         return 12
-    elif frequency == "fornightly":
+    elif frequency == "fortnightly":
         return 26
     elif frequency == "weekly":
         return 52
