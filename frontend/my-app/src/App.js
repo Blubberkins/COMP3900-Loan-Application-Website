@@ -12,8 +12,10 @@ import RegisterC from './pages/RegisterCPage';
 import AccountTypePage from './pages/AccountTypePage';
 import RegisterB from './pages/RegisterBPage';
 import ProtectedRoute from './pages/ProtectedRoute';
-
+import AppointmentPage from './pages/AppointmentPage';
 import BusinessHomePage from './pages/BusinessHome';
+import ViewAppointmentPage from './pages/ViewAppointmentPage';
+import MakeAppointmentPage from './pages/MakeAppointmentPage';
 
 function App() {
   return (
@@ -29,9 +31,10 @@ function App() {
             <Route path="/edit-package/:packageId" element={<div />} />
             <Route path="/home-loan" element={<HomeLoanPage/>} />
             <Route path="/loan-results" element={<LoanResultsPage />} />
-            <Route path="/appointment" element={<div />}/>
+            <Route path="/appointment" element={<AppointmentPage />}/>
             <Route path="/businessHome" element={<BusinessHomePage />} />
-
+            <Route path="/viewAppointment" element={<ViewAppointmentPage />} />
+            <Route path="/makeAppointment" element={<MakeAppointmentPage />} />
 
         </Routes>
       </BrowserRouter>
