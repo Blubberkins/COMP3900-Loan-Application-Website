@@ -1,6 +1,7 @@
 from flask import Flask, request, jsonify
 import firebase_admin
 from firebase_admin import db
+import uuid
 
 # getting a reference to the firebase account and database
 cred_obj = firebase_admin.credentials.Certificate('carbon-532ae-firebase-adminsdk-493c2-fe662c3d14.json')
@@ -47,6 +48,9 @@ def applyLoan():
     user_assets = request.form.get('user_assets')
     financial_files = request.form.get('financial_files')
 
+    # generate a unique ID for the application
+    application_id = str(uuid.uuid4())
+
     # compile preferences into dictionary format
     loanApplication = {
         "loan_details": 
@@ -56,7 +60,8 @@ def applyLoan():
             "deposit_amount": deposit_amount,
             "ir_type": ir_type,
             "payment_type": payment_type,
-            "loan_term": loan_term
+            "loan_term": loan_term,
+            "application_id": application_id
         },
         "personal_details": 
         {
