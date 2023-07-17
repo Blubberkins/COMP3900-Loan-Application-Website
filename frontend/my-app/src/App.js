@@ -16,6 +16,7 @@ import AppointmentPage from './pages/AppointmentPage';
 import BusinessHomePage from './pages/BusinessHome';
 import ViewAppointmentPage from './pages/ViewAppointmentPage';
 import MakeAppointmentPage from './pages/MakeAppointmentPage';
+import AvailableAppointments from './pages/AvailableAppointmentsPage';
 
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
             <Route path="/businessHome" element={<BusinessHomePage />} />
             <Route path="/viewAppointment" element={<ViewAppointmentPage />} />
             <Route path="/makeAppointment" element={<MakeAppointmentPage />} />
+            <Route path="/availableAppointments/:year/:month/:day" element={<AvailableAppointments />} />
 
         </Routes>
       </BrowserRouter>
