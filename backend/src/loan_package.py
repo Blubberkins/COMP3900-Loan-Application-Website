@@ -14,7 +14,7 @@ firebase_admin.initialize_app(cred, {'databaseURL': "https://comp3900-e4af5-defa
 app = Flask(__name__)
 
 # Main Functions
-@app.route("/new", method = ['Post'])
+@app.route("/new", method = ['POST'])
 def LP_new():
     ref = LP_set_ref()
     loanInfo = LP_get()
@@ -24,7 +24,7 @@ def LP_new():
     ref.push().set(loanInfo)
     return jsonify({'message': 'Success'})
 
-@app.route("/edit", method = ['Post'])
+@app.route("/edit", method = ['POST'])
 def LP_edit():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -46,7 +46,7 @@ def LP_edit():
     else:
         return jsonify({'message': 'Package Not Found'})
 
-@app.route("/view", method = ['Get'])
+@app.route("/view", method = ['GET'])
 def LP_view():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -57,11 +57,11 @@ def LP_view():
             return jsonify({'message': info})
     return jsonify({'message': 'Package Not Found'})
 
-@app.route("/view_all", method = ['Get'])
+@app.route("/view_all", method = ['GET'])
 def LP_view_all():
     ref = LP_set_ref()
     loans = ref.get()
-    return jsonify({f'message': loans})
+    return jsonify({'message': loans})
 
 # Helpers
 
@@ -73,10 +73,29 @@ def LP_get():
         "loan_name" : request.form.get("loan_name"),
         "lvr" : request.form.get("lvr"),
         "loan_purpose" : request.form.get("loan_purpose"),
+        "interest_rate" : request.form.get("interest_rate"),
         "ir_type" : request.form.get("ir_type"),
         "additional_payments" : request.form.get("additional_payments"),
         "redraws" : request.form.get("redraws")
     }
+
+@app.route("/repayment", method = ['Get'])
+def LP_repayment():
+    ref = LP_set_ref()
+    loans = ref.get()
+
+    loanName = request.form.get("loan_name")
+    repayPeriod = request.form.get("loan_time")
+    repayPeriod = request.form.get("loan_period")
+    loanAmount = request.form.get("loan_amount")
+
+    loans = ref.get()
+    for key, info in loans.items():
+        if (info["loan_name"] == loanName):
+            rate = info["interest_rate"] 
+    
+
+    repay = 0
 
 def LP_sanity(loanInfo):
     # ensure the loanInfo has all the fields correct
