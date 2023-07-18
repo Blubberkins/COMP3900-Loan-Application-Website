@@ -15,7 +15,7 @@ def LAB_approve():
     # a new database of applications that are approved
     approvedRef = db.reference("/CarbonBank/Loan/Approved")
 
-    applicationID = request.form.get("application_ID")
+    applicationID = request.form.get("application_id")
 
     newEntry = {
             "loan_id" : applicationID
@@ -34,7 +34,7 @@ def LAB_deny():
     # a new database of applications that are denied
     deniedRef = db.reference("/CarbonBank/Loan/Denied")
 
-    applicationID = request.form.get("application_ID")
+    applicationID = request.form.get("application_id")
     reason = request.form.get("deny_reason")
     
     newEntry = {
@@ -51,8 +51,8 @@ def LAB_deny():
 
 @app.route("/search",  methods=['GET'])
 def LAB_search():
-    #dunno
-    
+    matching = []
+
 
     return
 
@@ -61,40 +61,49 @@ def LAB_search():
 @app.route("/view_awaiting",  methods=['GET'])
 def LAB_view_awaiting():
     done = []
-    awaiting = {}
+    awaiting = []
 
     approvedRef = db.reference("/CarbonBank/Loan/Approved")
     for key, entry in approvedRef.get().items():
-        done.append(entry["application_ID"])
+        done.append(entry["application_id"])
 
     deniedRef = db.reference("/CarbonBank/Loan/Denied")
     for key, entry in deniedRef.get().items():
-        done.append(entry["application_ID"])
+        done.append(entry["application_id"])
 
     applicationRef = db.reference("/User/Application")
     for key, entry in  applicationRef.get().items():
-        if TODO not in done: # replace with unique id reference
-            awaiting.append(entry)
+        if entry["loan_details"]["application_id"] not in done:
+            awaiting.append(entry["loan_details"]["application_id"])
     
     return jsonify({'message': awaiting})
+
+@app.route("/view_approved",  methods=['GET'])
+def LAB_view_approved():
+    approvedRef = db.reference("/CarbonBank/Loan/Approved")
+    approved = approvedRef.get()
+    return jsonify({'message': approved})
+
+@app.route("/view_denied",  methods=['GET'])
+def LAB_view_denied():
+    deniedRef = db.reference("/CarbonBank/Loan/Approved")
+    denied = deniedRef.get()
+    return jsonify({'message': denied})
 
 @app.route("/view",  methods=['GET'])
 def LAB_view():
     applicationRef = db.reference("/User/Application")
 
-    application_ID = request.form.get("application_ID")
+    applicationID = request.form.get("application_id")
 
     for key, entry in applicationRef.get().items():
-        if (entry["application_ID"] == application_ID):
+        if (entry["loan_details"]["application_id"] == applicationID):
             return jsonify({'message': application})
     return jsonify({'message': 'Package Not Found'})
 
 @app.route("/view_all",  methods=['GET'])
-# returns a list of all applications
 def LAB_view_all():
     applicationRef = db.reference("/User/Application")
-    applications = applicationRef.get()
-    return jsonify({'message': applications})
-
-
-
+        applications = applicationRef.get()
+        return jsonify({'message': applications})
+    

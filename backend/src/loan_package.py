@@ -85,7 +85,7 @@ def LP_repayment():
     loans = ref.get()
 
     loanName = request.form.get("loan_name")
-    repayPeriod = request.form.get("loan_time")
+    repayTime = request.form.get("loan_time")
     repayPeriod = request.form.get("loan_period")
     loanAmount = request.form.get("loan_amount")
 
@@ -94,8 +94,9 @@ def LP_repayment():
         if (info["loan_name"] == loanName):
             rate = info["interest_rate"] 
     
-
+    # run function from calculator
     repay = 0
+    return repay
 
 def LP_sanity(loanInfo):
     # ensure the loanInfo has all the fields correct
