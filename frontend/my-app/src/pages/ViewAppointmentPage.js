@@ -37,6 +37,13 @@ function ViewAppointmentPage() {
       .then((data) => setCurrentDates(data))
       .catch((error) => console.log(error));
   }, []);
+  useEffect(() => {
+    // Fetch data from your backend API
+    fetch('your-backend-api-endpoint')
+      .then((response) => response.json())
+      .then((data) => setPastDates(data))
+      .catch((error) => console.log(error));
+  }, []);
   return (
     <div>
       <h3 className='text-xl col-span-2 my-10 font-bold ml-20'>
