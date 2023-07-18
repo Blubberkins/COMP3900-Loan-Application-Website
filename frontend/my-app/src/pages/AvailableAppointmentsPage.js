@@ -43,7 +43,8 @@ function AvailableAppointments() {
   };
   useEffect(() => {
     // Fetch data from your backend API
-    fetch("your-backend-api-endpoint")
+    const apiUrl = `your-backend-api-endpoint?year=${year}&month=${month}&day=${day}`;
+    fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => setDates(data))
       .catch((error) => console.log(error));
@@ -51,12 +52,14 @@ function AvailableAppointments() {
   return (
     <div>
       <div>
-        <h2>Available Appointments</h2>
-        <p>
+      <h3 className='text-xl col-span-2 my-10 font-bold ml-20'>
+        Available Appointments
+      </h3>
+        <p className='text-xl col-span-2 my-10 font-bold ml-20'>
           Selected Date: {year}-{month}-{day}
         </p>
       </div>
-      <div className="mt-8">
+      <div className="mt-8 ml-20 mr-20">
         {Dates.map((date, index) => (
           <div key={index} className="mb-4">
             <button

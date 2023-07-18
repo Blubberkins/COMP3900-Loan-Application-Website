@@ -19,6 +19,7 @@ function ConfirmAppointments() {
       timeStart,
       details: appointmentDetails,
     };
+    console.log(appointmentData)
     fetch("your-backend-api-endpoint", {
         method: "POST",
         headers: {
@@ -31,7 +32,7 @@ function ConfirmAppointments() {
           // Handle the response from the server
           // For example, show a success message or navigate to a different page
           console.log(data);
-          navigate("/success"); // Redirect to the success page
+          navigate("/home"); // Redirect to the success page
         })
         .catch((error) => {
           // Handle any errors
@@ -69,7 +70,7 @@ function ConfirmAppointments() {
             </button>
             <button
               type="submit"
-
+              onClick={handleConfirm}
               className="transition ease-in-out duration-500 bg-black hover:bg-white w-full text-white font-semibold hover:text-black py-2 px-4 mr-3 mt-4 border border-black hover:border-black rounded"
             >
               Confirm

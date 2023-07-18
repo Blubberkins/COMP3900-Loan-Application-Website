@@ -64,28 +64,28 @@ function ViewAppointmentPage() {
                   <div className='bg-white py-2 px-4 mt-2'>
                     {/* Render additional content inside the accordion */}
                     {/* For example: {date.details} */}
-                    <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
-                        <div class="flex flex-col pb-3">
-                            <dt class="mb-1 text-gray-500 md:text-lg">
+                    <dl className="max-w-md text-gray-900 divide-y divide-gray-200">
+                        <div className="flex flex-col pb-3">
+                            <dt className="mb-1 text-gray-500 md:text-lg">
                                 Location
                             </dt>
-                            <dd class="text-lg font-semibold">
+                            <dd className="text-lg font-semibold">
                                 {date.location}
                             </dd>
                         </div>
-                        <div class="flex flex-col py-3">
-                            <dt class="mb-1 text-gray-500 md:text-lg">
+                        <div className="flex flex-col py-3">
+                            <dt className="mb-1 text-gray-500 md:text-lg">
                                 Contact Details
                             </dt>
-                            <dd class="text-lg font-semibold">
+                            <dd className="text-lg font-semibold">
                                 {date.Contact}
                             </dd>
                         </div>
-                        <div class="flex flex-col pt-3">
-                            <dt class="mb-1 text-gray-500 md:text-lg">
+                        <div className="flex flex-col pt-3">
+                            <dt className="mb-1 text-gray-500 md:text-lg">
                                 Appointment with
                             </dt>
-                            <dd class="text-lg font-semibold">
+                            <dd className="text-lg font-semibold">
                                 {date.name}
                             </dd>
                         </div>
@@ -110,28 +110,28 @@ function ViewAppointmentPage() {
                   <div className='bg-white py-2 px-4 mt-2'>
                     {/* Render additional content inside the accordion */}
                     {/* For example: {date.details} */}
-                    <dl class="max-w-md text-gray-900 divide-y divide-gray-200">
-                        <div class="flex flex-col pb-3">
-                            <dt class="mb-1 text-gray-500 md:text-lg">
+                    <dl className="max-w-md text-gray-900 divide-y divide-gray-200">
+                        <div className="flex flex-col pb-3">
+                            <dt className="mb-1 text-gray-500 md:text-lg">
                                 Location
                             </dt>
-                            <dd class="text-lg font-semibold">
+                            <dd className="text-lg font-semibold">
                                 {date.location}
                             </dd>
                         </div>
-                        <div class="flex flex-col py-3">
-                            <dt class="mb-1 text-gray-500 md:text-lg">
+                        <div className="flex flex-col py-3">
+                            <dt className="mb-1 text-gray-500 md:text-lg">
                                 Contact Details
                             </dt>
-                            <dd class="text-lg font-semibold">
+                            <dd className="text-lg font-semibold">
                                 {date.Contact}
                             </dd>
                         </div>
-                        <div class="flex flex-col pt-3">
-                            <dt class="mb-1 text-gray-500 md:text-lg">
+                        <div className="flex flex-col pt-3">
+                            <dt className="mb-1 text-gray-500 md:text-lg">
                                 Appointment with
                             </dt>
-                            <dd class="text-lg font-semibold">
+                            <dd className="text-lg font-semibold">
                                 {date.name}
                             </dd>
                         </div>

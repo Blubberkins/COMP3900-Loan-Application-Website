@@ -18,6 +18,9 @@ import ViewAppointmentPage from './pages/ViewAppointmentPage';
 import MakeAppointmentPage from './pages/MakeAppointmentPage';
 import AvailableAppointments from './pages/AvailableAppointmentsPage';
 import ConfirmAppointments from './pages/ConfirmAppointmentPage';
+import BusinessAppointmentPage from './pages/BusinessAppointment';
+import BusinessViewAppointmentPage from './pages/BusinessViewAppointmentPage';
+import BusinessAvailabilitiesPage from './pages/BusinessAvailabilityPage';
 
 function App() {
   return (
@@ -39,6 +42,10 @@ function App() {
             <Route path="/makeAppointment" element={<MakeAppointmentPage />} />
             <Route path="/availableAppointments/:year/:month/:day" element={<AvailableAppointments />} />
             <Route path="/ConfirmAppointments/:contact/:year/:month/:day/:timeEnd/:timeStart" element={<ConfirmAppointments />} />
+            <Route path="/BusinessAppointment" element={<BusinessAppointmentPage/>} />
+            <Route path="/BusinessViewAppointment" element={<BusinessViewAppointmentPage/>} />
+            <Route path="/BusinessAvailability" element={<BusinessAvailabilitiesPage/>} />
+
 
         </Routes>
       </BrowserRouter>
