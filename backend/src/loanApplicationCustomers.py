@@ -107,3 +107,6 @@ def getLoan():
 
     # return the data in JSON format
     return jsonify(loanData)
+
+if __name__ == '__main__':
+    app.run(debug=True)
