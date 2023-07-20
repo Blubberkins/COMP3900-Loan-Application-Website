@@ -46,6 +46,20 @@ def LP_edit():
     else:
         return jsonify({'message': 'Package Not Found'})
 
+@app.route("/remove", method = ['POST'])
+def LP_remove():
+    ref = LP_set_ref()
+    loanName = request.form.get("loan_name")
+
+    loans = ref.get()
+    for key, info in loans.items():
+        if (info["loan_name"] == loanName):
+            delete_user_ref = ref.child(key)
+            delete_user_ref.delete()
+            return ({'message': 'Success'})
+
+    return ({'message': 'Package Not Found'})
+
 @app.route("/view", method = ['GET'])
 def LP_view():
     ref = LP_set_ref()
