@@ -16,7 +16,7 @@ function UserIncomePage() {
         // page 3 takes these parameters as defined in backend
         user_income_status: employmentStatus,
         user_income: salary,
-        user_rental_income_status: rentalIncomeStatus,
+        //user_rental_income_status: rentalIncomeStatus,
         user_additional_income: additionalIncome,
         // placeholder
         income_files: ""

@@ -11,6 +11,7 @@ function PropertyPage() {
 
   const onSubmit = async () => {
     try {
+      // check whether await works
       const response = await axios.post("http://localhost:5000/applyLoan", {
         // page 1 takes these parameters as defined in backend
         property_type: propertyType,
