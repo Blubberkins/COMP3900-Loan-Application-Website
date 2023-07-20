@@ -54,8 +54,8 @@ def LP_remove():
     loans = ref.get()
     for key, info in loans.items():
         if (info["loan_name"] == loanName):
-            delete_user_ref = ref.child(key)
-            delete_user_ref.delete()
+            deleteRef = ref.child(key)
+            deleteRef.delete()
             return ({'message': 'Success'})
 
     return ({'message': 'Package Not Found'})
