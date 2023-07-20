@@ -109,7 +109,10 @@ def LAB_search():
             dictCompare(pair['personal_details'], personal_details)):
                 matching.append(pair['loan_details']['application_id'])
     
-    return jsonify({'message': matching})
+    if matching:
+        return jsonify({'message': "Application Not Found"})
+    else:
+        return jsonify({'message': matching})
 
 @app.route("/view_awaiting",  methods=['GET'])
 def LAB_view_awaiting():
