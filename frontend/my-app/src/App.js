@@ -21,8 +21,15 @@ import RegisterC from './pages/RegisterCPage';
 import AccountTypePage from './pages/AccountTypePage';
 import RegisterB from './pages/RegisterBPage';
 import ProtectedRoute from './pages/ProtectedRoute';
-
+import AppointmentPage from './pages/AppointmentPage';
 import BusinessHomePage from './pages/BusinessHome';
+import ViewAppointmentPage from './pages/ViewAppointmentPage';
+import MakeAppointmentPage from './pages/MakeAppointmentPage';
+import AvailableAppointments from './pages/AvailableAppointmentsPage';
+import ConfirmAppointments from './pages/ConfirmAppointmentPage';
+import BusinessAppointmentPage from './pages/BusinessAppointment';
+import BusinessViewAppointmentPage from './pages/BusinessViewAppointmentPage';
+import BusinessAvailabilitiesPage from './pages/BusinessAvailabilityPage';
 
 function App() {
   return (
@@ -38,8 +45,15 @@ function App() {
             <Route path="/edit-package/:packageId" element={<div />} />
             <Route path="/home-loan" element={<HomeLoanPage/>} />
             <Route path="/loan-results" element={<LoanResultsPage />} />
-            <Route path="/appointment" element={<div />}/>
+            <Route path="/appointment" element={<AppointmentPage />}/>
             <Route path="/businessHome" element={<BusinessHomePage />} />
+            <Route path="/viewAppointment" element={<ViewAppointmentPage />} />
+            <Route path="/makeAppointment" element={<MakeAppointmentPage />} />
+            <Route path="/availableAppointments/:year/:month/:day" element={<AvailableAppointments />} />
+            <Route path="/ConfirmAppointments/:contact/:year/:month/:day/:timeEnd/:timeStart" element={<ConfirmAppointments />} />
+            <Route path="/BusinessAppointment" element={<BusinessAppointmentPage/>} />
+            <Route path="/BusinessViewAppointment" element={<BusinessViewAppointmentPage/>} />
+            <Route path="/BusinessAvailability" element={<BusinessAvailabilitiesPage/>} />
 
             {/* loan application for customer */}
             <Route path="/page1" element={<PropertyPage />} />

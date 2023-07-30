@@ -17,11 +17,21 @@ const BusinessHomePage = () => {
         // An error happened.
       });
   };
+  const handleAppointment = () => {
+    navigate('/BusinessAppointment')
+  };
   return (
     <div>
       BusinessHome
+      <div className='block'>
+        <button onClick={handleLogout}>
+          Logout
+        </button>
+      </div>
       <div>
-        <button onClick={handleLogout}>Logout</button>
+        <button onClick={handleAppointment}>
+          Appointments
+        </button>
       </div>
     </div>
   );
