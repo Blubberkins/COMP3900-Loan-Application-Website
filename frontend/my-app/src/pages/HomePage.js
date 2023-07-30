@@ -17,6 +17,13 @@ const Home = () => {
         // An error happened.
         });
     }
+    const handleappointment = () => {               
+        signOut(auth).then(() => {
+            navigate("/appointment");
+        }).catch((error) => {
+        // An error happened.
+        });
+    }
    
     return(
         <>
@@ -28,6 +35,11 @@ const Home = () => {
                 <div>
         			<button onClick={handleLogout}>
                         Logout
+                    </button>
+        		</div>
+                <div>
+        			<button onClick={handleappointment}>
+                        Make appointment
                     </button>
         		</div>
             </nav>

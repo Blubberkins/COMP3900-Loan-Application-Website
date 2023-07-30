@@ -16,6 +16,7 @@ export const Calculator = () => {
   const [borrowAmount, setBorrowAmount] = useState(30000);
 
   const onSubmit = async (values) => {
+    setBorrowAmount(45000)
     console.log(values)
   };
 
