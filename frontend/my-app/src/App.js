@@ -8,6 +8,13 @@ import OverviewPage from './pages/OverviewPage';
 import HomeLoanPage from './pages/HomeLoanPage';
 import LoanResultsPage from './pages/LoanResultsPage';
 
+// loan application for customers section
+import PropertyPage from './pages/PropertyPage';
+import UserDetailsPage from './pages/UserDetailsPage';
+import UserIncomePage from './pages/UserIncomePage';
+import UserAssetsPage from './pages/UserAssetsPage';
+import LoanDetailsPage from './pages/LoanDetailsPage';
+
 import RegisterC from './pages/RegisterCPage';
 import AccountTypePage from './pages/AccountTypePage';
 import RegisterB from './pages/RegisterBPage';
@@ -31,6 +38,13 @@ function App() {
             <Route path="/loan-results" element={<LoanResultsPage />} />
             <Route path="/appointment" element={<div />}/>
             <Route path="/businessHome" element={<BusinessHomePage />} />
+
+            {/* loan application for customer */}
+            <Route path="/page1" element={<PropertyPage />} />
+            <Route path="/page2" element={<UserDetailsPage />} />
+            <Route path="/page3" element={<UserIncomePage />} />
+            <Route path="/page4" element={<UserAssetsPage />} />
+            <Route path="/page5" element={<LoanDetailsPage />} />
 
 
         </Routes>
