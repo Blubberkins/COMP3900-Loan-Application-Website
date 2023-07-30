@@ -15,6 +15,8 @@ import UserIncomePage from './pages/UserIncomePage';
 import UserAssetsPage from './pages/UserAssetsPage';
 import LoanDetailsPage from './pages/LoanDetailsPage';
 
+import DashboardPage from './pages/DashboardPage';
+
 import RegisterC from './pages/RegisterCPage';
 import AccountTypePage from './pages/AccountTypePage';
 import RegisterB from './pages/RegisterBPage';
@@ -59,6 +61,9 @@ function App() {
             <Route path="/page3" element={<UserIncomePage />} />
             <Route path="/page4" element={<UserAssetsPage />} />
             <Route path="/page5" element={<LoanDetailsPage />} />
+
+            <Route path="/dashboard" element={<DashboardPage />} />
+
 
 
         </Routes>
