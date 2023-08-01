@@ -1,10 +1,13 @@
 from flask import Flask, request
 from json import dumps, loads
+from flask_cors import CORS
 
 from src import config
 from src.calculators import borrow_calc, repay_calc, extra_payment
 
 APP = Flask(__name__)
+CORS(APP)
+
 
 @APP.route("/calculators/repayment", methods=['POST'])
 def calculators_repay():
@@ -17,6 +20,7 @@ def calculators_repay():
     result = repay_calc(principal, interest, duration, frequency, type)
     return dumps(result)
 
+
 @APP.route("/calculators/extra", methods=['POST'])
 def calculators_extra():
     payload = request.get_json()
@@ -26,25 +30,27 @@ def calculators_extra():
     frequency = payload['frequency']
     type = payload['type']
     extra = payload['extra']
-    result = extra_payment(principal, interest, duration, frequency, type, extra)
+    result = extra_payment(principal, interest, duration,
+                           frequency, type, extra)
     return dumps(result)
+
 
 @APP.route("/calculators/borrow", methods=['POST'])
 def calculators_borrow():
     payload = request.get_json()
-    joint = payload['joint']
-    no_dependents = payload['no_dependents']
-    income = payload['income']
-    rental_income = payload['rental_income']
-    other_income = payload['other_income']
-    living_expenses = payload['living_expenses']
-    loans = payload['loans']
-    credit_limit = payload['credit_limit']
-    interest = payload['interest']
-    duration = payload['duration']
-    result = borrow_calc(joint, no_dependents, income, rental_income, other_income, 
-                         living_expenses, loans, credit_limit, interest, duration)
+    joint = int(payload['numPeopleApply'][0])
+    numPeopleSupport = int(payload['numPeopleSupport'])
+    propertyType = payload['propertyType'][0]
+    income = int(payload['income'])
+    incomePeriod = payload['incomePeriod']
+    expensePeriod = payload['expensePeriod']
+    loanPeriod = payload['loanPeriod']
+    living_expenses = int(payload['expense'])
+    loans = int(payload['loan'])
+    credit_limit = int(payload['credit'])
+    result = borrow_calc(joint, numPeopleSupport, income, living_expenses, loans, credit_limit, propertyType, incomePeriod, expensePeriod, loanPeriod)
     return dumps(result)
 
+
 if __name__ == "__main__":
-    APP.run(port = config.port)
+    APP.run(port=config.port)
