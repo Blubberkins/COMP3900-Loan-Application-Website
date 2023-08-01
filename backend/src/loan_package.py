@@ -15,7 +15,7 @@ default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': 'https://c
 app = Flask(__name__)
 
 # Main Functions
-@app.route("/new", method = ['POST'])
+@app.route("/new", methods = ['POST'])
 def LP_new():
     ref = LP_set_ref()
     loanInfo = LP_get()
@@ -25,7 +25,7 @@ def LP_new():
     ref.push().set(loanInfo)
     return jsonify({'message': 'Success'})
 
-@app.route("/edit", method = ['POST'])
+@app.route("/edit", methods = ['POST'])
 def LP_edit():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -47,7 +47,7 @@ def LP_edit():
     else:
         return jsonify({'message': 'Package Not Found'})
 
-@app.route("/remove", method = ['POST'])
+@app.route("/remove", methods = ['POST'])
 def LP_remove():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -61,7 +61,7 @@ def LP_remove():
 
     return ({'message': 'Package Not Found'})
 
-@app.route("/view", method = ['GET'])
+@app.route("/view", methods = ['GET'])
 def LP_view():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -72,7 +72,7 @@ def LP_view():
             return jsonify({'message': info})
     return jsonify({'message': 'Package Not Found'})
 
-@app.route("/view_all", method = ['GET'])
+@app.route("/view_all", methods = ['GET'])
 def LP_view_all():
     ref = LP_set_ref()
     loans = ref.get()
@@ -94,7 +94,7 @@ def LP_get():
         "redraws" : request.form.get("redraws")
     }
 
-@app.route("/repayment", method = ['Get'])
+@app.route("/repayment", methods = ['GET'])
 def LP_repayment():
     ref = LP_set_ref()
     loans = ref.get()

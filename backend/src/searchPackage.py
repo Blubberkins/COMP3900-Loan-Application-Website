@@ -48,3 +48,6 @@ def recommendPackage():
     preferenceList = sorted(packages, key=lambda p: len(set(preferences) & set(p.keys())), reverse=True)
 
     return jsonify(preferenceList)
+
+if __name__ == '__main__':
+    app.run(debug=True)
