@@ -65,34 +65,34 @@ export const Calculator = () => {
               <h3 className='text-xl col-span-2'>
                 How many people are applying?
               </h3>
-              <div className='flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700'>
+              <div className='flex items-center pl-4 border border-gray-200 rounded'>
                 <Field
                   id='numPeopleApply'
                   type='radio'
                   value='1'
                   name='numPeopleApply'
-                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500'
                   required // Make the radio button required
                 />
                 <label
                   htmlFor='numPeopleApply1'
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
+                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900'
                 >
                   one
                 </label>
               </div>
-              <div className='flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700'>
+              <div className='flex items-center pl-4 border border-gray-200 rounded'>
                 <Field
                   id='numPeopleApply'
                   type='radio'
                   value='2'
                   name='numPeopleApply'
-                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500'
                   required // Make the radio button required
                 />
                 <label
                   htmlFor='numPeopleApply2'
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
+                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900'
                 >
                   two
                 </label>
@@ -115,29 +115,29 @@ export const Calculator = () => {
               <h3 className='text-xl col-span-2'>
                 What type of property are you looking to buy?
               </h3>
-              <div className='flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700'>
+              <div className='flex items-center pl-4 border border-gray-200 rounded'>
                 <Field
                   id='propertyType'
                   type='radio'
                   value='A home'
                   name='propertyType'
-                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500'
                   required
                 />
-                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900'>
                   A home
                 </label>
               </div>
-              <div className='flex items-center pl-4 border border-gray-200 rounded dark:border-gray-700'>
+              <div className='flex items-center pl-4 border border-gray-200 rounded'>
                 <Field
                   id='propertyType'
                   type='radio'
                   value='A Investment property'
                   name='propertyType'
-                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
+                  className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500'
                   required
                 />
-                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900'>
                   An Investment property
                 </label>
               </div>
@@ -208,7 +208,7 @@ export const Calculator = () => {
                 type='text'
                 name='credit'
                 id='credit'
-                className='w-1/2 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-700'
+                className='w-1/2 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5'
                 placeholder=''
                 required
               />

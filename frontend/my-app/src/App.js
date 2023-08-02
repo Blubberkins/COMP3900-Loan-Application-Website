@@ -32,6 +32,7 @@ import BusinessViewAppointmentPage from './pages/BusinessViewAppointmentPage';
 import BusinessAvailabilitiesPage from './pages/BusinessAvailabilityPage';
 import StartPage from './pages/StartPage';
 import CalculatorPage from './pages/CalculatorPage';
+import AddPackagePage from './pages/AddPackagePage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
             <Route path="/home" element={<ProtectedRoute> <HomePage/> </ProtectedRoute>} />
             <Route path="/SignUp" element={<AccountTypePage />}></Route>
             <Route path="/overview" element={<OverviewPage />} />
+            <Route path="/add-new-package" element={<AddPackagePage />} />
             <Route path="/edit-package/:packageId" element={<div />} />
             <Route path="/home-loan" element={<HomeLoanPage/>} />
             <Route path="/loan-results" element={<LoanResultsPage />} />

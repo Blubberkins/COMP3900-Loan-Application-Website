@@ -74,14 +74,28 @@ def LP_set_ref():
     return db.reference("/CarbonBank/Loan_Packages")
 
 def LP_get():
+    payload = request.get_json()
+    if payload["additional_payments"] == 'true':
+        payload["additional_payments"] = True
+    if payload["additional_payments"] == 'false':
+        payload["additional_payments"] = False
+    if payload["redraws"] == 'true':
+        payload["redraws"] = True
+    if payload["redraws"] == 'false':
+        payload["redraws"] = False
+    if isinstance(payload.get("interest_rate"), int):
+        payload["interest_rate"] = float(payload["interest_rate"])
+    if isinstance(payload.get("lvr"), int):
+        payload["lvr"] = float(payload["lvr"])
+    print(payload)
     return {
-        "loan_name" : request.form.get("loan_name"),
-        "lvr" : request.form.get("lvr"),
-        "loan_purpose" : request.form.get("loan_purpose"),
-        "interest_rate" : request.form.get("interest_rate"),
-        "ir_type" : request.form.get("ir_type"),
-        "additional_payments" : request.form.get("additional_payments"),
-        "redraws" : request.form.get("redraws")
+        "loan_name" : payload["loan_name"],
+        "lvr" : payload["lvr"],
+        "loan_purpose" : payload["loan_purpose"],
+        "interest_rate" : payload["interest_rate"],
+        "ir_type" : payload["ir_type"],
+        "additional_payments" : payload["additional_payments"],
+        "redraws" : payload["redraws"]
     }
 
 @loan_package.route("/repayment", methods = ['GET'])
