@@ -127,8 +127,7 @@ def extra_payment(principal, interest, duration, frequency, type, extra):
         'extra_graph': extra_graph
     }
 
-def borrow_calc(joint, no_dependents, income, rental_income, other_income,
-                living_expenses, loans, credit_limit, interest, duration):
+def borrow_calc(joint, no_dependents, income, living_expenses, loans, credit_limit, propertyType, incomePeriod, expensePeriod, loanPeriod):
     '''
     Given the inputs, calculates the maximum amount that can be borrowed over
     the duration of the loan by determining the monthly surplus
@@ -154,7 +153,12 @@ def borrow_calc(joint, no_dependents, income, rental_income, other_income,
     # Monthly surplus = Gross income - (tax + expenses)
 
     # Gross income = Income + 0.8 * rental income + other
-    gross_income = income + 0.8*rental_income*12 + other_income
+    print(joint, no_dependents, income, living_expenses, loans, credit_limit, propertyType, incomePeriod, expensePeriod, loanPeriod)
+    if incomePeriod == "month":
+        income = income*12
+    elif incomePeriod == "fortnight":
+        income = income*26
+    gross_income = income
     tax = calc_tax(gross_income)
 
     # Expenses = max(estimated living expenses, HEM) + loans + 0.025 * total credit limit
@@ -164,13 +168,20 @@ def borrow_calc(joint, no_dependents, income, rental_income, other_income,
     # Second array is joint, +1 dependent for each column
     hem = [[1306, 1701, 2085, 2514, 2943, 3372, 3801],
            [2971, 3273, 3511, 3775, 4039, 4303, 4567]]
-    
+    if expensePeriod == "year":
+        living_expenses = living_expenses/12
+    elif expensePeriod == "fortnight":
+        living_expenses = living_expenses*2.1726
     expenses = max(living_expenses, hem[joint][no_dependents]) + loans + 0.025 * credit_limit
 
     a = (gross_income - tax)/12 - expenses 
+    if propertyType == 'A home':
+        interest = 6.24
+    interest = 6.35
+    duration = 20
     r = interest/1200
     n = duration*12
-
+    print(r,n,a)
     borrowing_power = max(0, do_borrow_calc(r, n ,a))
 
     return {
