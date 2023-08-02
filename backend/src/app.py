@@ -2,8 +2,8 @@ from flask import Flask, request
 from json import dumps, loads
 from flask_cors import CORS
 
-from src import config
-from src.calculators import borrow_calc, repay_calc, extra_payment
+import config
+from calculators import borrow_calc, repay_calc, extra_payment
 
 APP = Flask(__name__)
 CORS(APP)
@@ -40,7 +40,7 @@ def calculators_borrow():
     payload = request.get_json()
     joint = int(payload['numPeopleApply'][0])
     numPeopleSupport = int(payload['numPeopleSupport'])
-    propertyType = payload['propertyType'][0]
+    propertyType = payload['propertyType']
     income = int(payload['income'])
     incomePeriod = payload['incomePeriod']
     expensePeriod = payload['expensePeriod']
