@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function PropertyPage() {
   const [propertyType, setPropertyType] = useState("");
@@ -31,7 +32,8 @@ function PropertyPage() {
 
   return (
     <div className="p-10">
-      <h1 className="font-bold text-2xl mb-1">What type of property is it?</h1>
+      <Navbar/>
+      <h1 className="font-bold text-2xl mb-1 mt-10">What type of property is it?</h1>
       <h2 className="text-l mb-4">Must be a residential address</h2>
       <input 
         className="w-full p-2 mb-8 border rounded-md" 

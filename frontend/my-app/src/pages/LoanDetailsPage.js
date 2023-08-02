@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function LoanDetailsPage() {
   const [irType, setIrType] = useState("");
@@ -31,7 +32,8 @@ function LoanDetailsPage() {
 
   return (
     <div className="m-4">
-      <h1 className="font-bold text-2xl mb-4">Type of interest rate</h1>
+      <Navbar/>
+      <h1 className="font-bold text-2xl mb-4 mt-10">Type of interest rate</h1>
 
       <div className="mb-4">
         <button onClick={() => setIrType("Variable")} className={`px-4 py-2 mr-2 rounded ${irType === "Variable" ? "bg-blue-500 text-white" : "border border-gray-300"}`}>Variable</button>
