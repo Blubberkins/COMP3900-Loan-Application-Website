@@ -58,7 +58,7 @@ def calculators_borrow():
     payload = request.get_json()
     joint = int(payload['numPeopleApply'][0])
     numPeopleSupport = int(payload['numPeopleSupport'])
-    propertyType = payload['propertyType'][0]
+    propertyType = payload['propertyType']
     income = int(payload['income'])
     incomePeriod = payload['incomePeriod']
     expensePeriod = payload['expensePeriod']
