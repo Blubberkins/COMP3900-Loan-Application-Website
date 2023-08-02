@@ -1,15 +1,10 @@
-from flask import Flask, request, jsonify
-import firebase_admin
+from flask import request, jsonify, Blueprint
 from firebase_admin import db
 
-# getting a reference to the firebase account and database
-cred_obj = firebase_admin.credentials.Certificate('carbon-532ae-firebase-adminsdk-493c2-fe662c3d14.json')
-default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': 'https://carbon-532ae-default-rtdb.asia-southeast1.firebasedatabase.app/'})
-
-app = Flask(__name__)
+loan_preferences = Blueprint('loan_preferences', __name__)
 
 # ask user for their loan preferences and update them in the database
-@app.route("/preferences",  methods=['POST'])
+@loan_preferences.route("/preferences",  methods=['POST'])
 def loanPreferences():
 
     # retrieve user loan preferences from database
@@ -17,10 +12,12 @@ def loanPreferences():
     
     # get user input for loan purpose (live-in/investment), ir type (fixed/variable),
     # ability to make additional payments (Y/N), and access to redraws (Y/N)
-    loan_purpose = request.form.get('loan_purpose')
-    ir_type = request.form.get('ir_type')
-    additional_payments = request.form.get('additional_payments')
-    redraws = request.form.get('redraws')
+    input_data = request.get_json()
+
+    loan_purpose = input_data.get('loan_purpose')
+    ir_type = input_data.get('ir_type')
+    additional_payments = input_data.get('additional_payments')
+    redraws = input_data.get('redraws')
 
     # compile preferences into dictionary format
     newPreferences = {

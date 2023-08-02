@@ -1,17 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import request, jsonify, Blueprint
 import loan_package
 import json
-import firebase_admin
 from firebase_admin import db
 
-# getting a reference to the firebase account and database
-cred_obj = firebase_admin.credentials.Certificate('carbon-532ae-firebase-adminsdk-493c2-fe662c3d14.json')
-default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': 'https://carbon-532ae-default-rtdb.asia-southeast1.firebasedatabase.app/'})
-
-app = Flask(__name__)
+search_package = Blueprint('search_package', __name__)
 
 # returns list of packages sorted by interest rate, excluding packages based on their LVRs
-@app.route("/search",  methods=['POST'])
+@search_package.route("/search",  methods=['POST'])
 def searchPackage():
 
     # retrieve package list
@@ -33,7 +28,7 @@ def searchPackage():
     return jsonify(irList)
 
 # returns list of packages sorted by the number of user loan preferences they satisfy
-@app.route("/recommend",  methods=['POST'])
+@search_package.route("/recommend",  methods=['POST'])
 def recommendPackage():
 
     # retrieve package list
@@ -48,6 +43,3 @@ def recommendPackage():
     preferenceList = sorted(packages, key=lambda p: len(set(preferences) & set(p.keys())), reverse=True)
 
     return jsonify(preferenceList)
-
-if __name__ == '__main__':
-    app.run(debug=True)

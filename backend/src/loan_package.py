@@ -1,21 +1,11 @@
-import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import db
 
-from flask import Flask, request, jsonify
+from flask import request, jsonify, Blueprint
 
-# Fetch the service account key JSON file contents
-# i used my own firebase for testing but will need to get the key for the group one
-cred_obj = firebase_admin.credentials.Certificate('carbon-532ae-firebase-adminsdk-493c2-fe662c3d14.json')
-# Initialize the app with a service account, granting admin privileges
-# should change permissions for the thingo but idk how
-default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': 'https://carbon-532ae-default-rtdb.asia-southeast1.firebasedatabase.app/'})
-
-
-app = Flask(__name__)
+loan_package = Blueprint('loan_package', __name__)
 
 # Main Functions
-@app.route("/new", methods = ['POST'])
+@loan_package.route("/new", methods = ['POST'])
 def LP_new():
     ref = LP_set_ref()
     loanInfo = LP_get()
@@ -25,7 +15,7 @@ def LP_new():
     ref.push().set(loanInfo)
     return jsonify({'message': 'Success'})
 
-@app.route("/edit", methods = ['POST'])
+@loan_package.route("/edit", methods = ['POST'])
 def LP_edit():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -47,7 +37,7 @@ def LP_edit():
     else:
         return jsonify({'message': 'Package Not Found'})
 
-@app.route("/remove", methods = ['POST'])
+@loan_package.route("/remove", methods = ['POST'])
 def LP_remove():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -61,7 +51,7 @@ def LP_remove():
 
     return ({'message': 'Package Not Found'})
 
-@app.route("/view", methods = ['GET'])
+@loan_package.route("/view", methods = ['GET'])
 def LP_view():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -72,7 +62,7 @@ def LP_view():
             return jsonify({'message': info})
     return jsonify({'message': 'Package Not Found'})
 
-@app.route("/view_all", methods = ['GET'])
+@loan_package.route("/view_all", methods = ['GET'])
 def LP_view_all():
     ref = LP_set_ref()
     loans = ref.get()
@@ -94,7 +84,7 @@ def LP_get():
         "redraws" : request.form.get("redraws")
     }
 
-@app.route("/repayment", methods = ['GET'])
+@loan_package.route("/repayment", methods = ['GET'])
 def LP_repayment():
     ref = LP_set_ref()
     loans = ref.get()

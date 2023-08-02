@@ -1,15 +1,33 @@
 from flask import Flask, request
 from json import dumps, loads
 from flask_cors import CORS
+import firebase_admin
 
-from src import config
-from src.calculators import borrow_calc, repay_calc, extra_payment
+import config
+from calculators import borrow_calc, repay_calc, extra_payment
 
-APP = Flask(__name__)
-CORS(APP)
+# obtaining firebase credentials and initializing firebase database
+cred_obj = firebase_admin.credentials.Certificate('carbon-532ae-firebase-adminsdk-493c2-fe662c3d14.json')
+default_app = firebase_admin.initialize_app(cred_obj, {'databaseURL': 'https://carbon-532ae-default-rtdb.asia-southeast1.firebasedatabase.app/'})
 
+# import all backend functions except calculators (functions for calc are integrated into app.py)
+from loan_package import loan_package
+from loanApplicationBank import loan_application_bank
+from loanApplicationCustomers import loan_application_customers
+from loanPreferences import loan_preferences
+from searchPackage import search_package
 
-@APP.route("/calculators/repayment", methods=['POST'])
+app = Flask(__name__)
+CORS(app)
+
+# register backend functions as blueprints
+app.register_blueprint(loan_package)
+app.register_blueprint(loan_application_bank)
+app.register_blueprint(loan_application_customers)
+app.register_blueprint(loan_preferences)
+app.register_blueprint(search_package)
+
+@app.route("/calculators/repayment", methods=['POST'])
 def calculators_repay():
     payload = request.get_json()
     principal = payload['principal']
@@ -21,7 +39,7 @@ def calculators_repay():
     return dumps(result)
 
 
-@APP.route("/calculators/extra", methods=['POST'])
+@app.route("/calculators/extra", methods=['POST'])
 def calculators_extra():
     payload = request.get_json()
     principal = payload['principal']
@@ -35,7 +53,7 @@ def calculators_extra():
     return dumps(result)
 
 
-@APP.route("/calculators/borrow", methods=['POST'])
+@app.route("/calculators/borrow", methods=['POST'])
 def calculators_borrow():
     payload = request.get_json()
     joint = int(payload['numPeopleApply'][0])
@@ -53,4 +71,4 @@ def calculators_borrow():
 
 
 if __name__ == "__main__":
-    APP.run(port=config.port)
+    app.run(port=config.port)
