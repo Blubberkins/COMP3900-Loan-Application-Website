@@ -172,6 +172,12 @@ def borrow_calc(joint, no_dependents, income, living_expenses, loans, credit_lim
         living_expenses = living_expenses/12
     elif expensePeriod == "fortnight":
         living_expenses = living_expenses*2.1726
+
+    if loanPeriod == "year":
+        loans = loans/12
+    elif loanPeriod == "fortnight":
+        loans = loans*2.1726
+
     expenses = max(living_expenses, hem[joint][no_dependents]) + loans + 0.025 * credit_limit
 
     a = (gross_income - tax)/12 - expenses 
