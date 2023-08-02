@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function UserDetailsPage() {
   const [userTitle, setUserTitle] = useState("");
@@ -40,7 +41,8 @@ function UserDetailsPage() {
 
   return (
     <div className="px-6 py-8">
-      <h1 className="font-bold text-2xl mb-2">Title</h1>
+      <Navbar/>
+      <h1 className="font-bold text-2xl mb-2 mt-10">Title</h1>
       <select value={userTitle} onChange={(e) => setUserTitle(e.target.value)} className="mb-4 p-2 w-full bg-white rounded shadow">
         <option value="Mr">Mr</option>
         <option value="Mrs">Mrs</option>

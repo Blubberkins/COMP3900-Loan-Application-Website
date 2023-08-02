@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function UserIncomePage() {
   const [employmentStatus, setEmploymentStatus] = useState("");
@@ -34,7 +35,8 @@ function UserIncomePage() {
 
   return (
     <div className="m-4">
-      <h1 className="font-bold text-2xl mb-4">What you earn</h1>
+      <Navbar/>
+      <h1 className="font-bold text-2xl mb-4 mt-10">What you earn</h1>
 
       <h2 className="font-bold text-l mb-2">Employment status</h2>
       <select value={employmentStatus} onChange={(e) => setEmploymentStatus(e.target.value)} className="w-full mb-4 p-2 border border-gray-300 rounded">
