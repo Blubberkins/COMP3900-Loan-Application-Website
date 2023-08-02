@@ -15,46 +15,45 @@ export const Calculator = () => {
     loan: '',
     loanPeriod: 'year',
     credit: '',
-  };
+    repayDuration: '',
+    repayPeriod: '',
+    interest: '',
 
+  };
   const [borrowAmount, setBorrowAmount] = useState(0);
+  const [repayDuration, setrepayDuration] = useState('year');
+  const [repayPeriod, setrepayPeriod] = useState('20');
+  const [interest, setinterest] = useState('6.24');
 
   const onSubmit = async (values) => {
     console.log(values);
+    console.log(repayPeriod);
     try {
       const response = await axios.post(
         'http://localhost:5000/calculators/borrow',
         values
       );
-      setBorrowAmount(response['data']['borrowing_power'])
+      setBorrowAmount(response['data']['borrowing_power']);
     } catch (error) {
       console.error('Error occurred during the request: ', error);
     }
   };
 
-  const validate = (values) => {
-    const errors = {};
-
-    if (!values.numPeopleApply) {
-      errors.numPeopleApply = 'required';
+  const onRepay = async (values, borrowAmount) => {
+    const requestData = {
+      repayPeriod: values.repayPeriod
     }
-
-    if (!values.numPeopleSupport) {
-      errors.numPeopleSupport = 'required';
+    console.log(values);
+    console.log(requestData);
+    try {
+      const response = await axios.post(
+        'http://localhost:5000/calculators/repayment',
+        values
+      );
+      setBorrowAmount(response['data']['borrowing_power']);
+    } catch (error) {
+      console.error('Error occurred during the request: ', error);
     }
-
-    if (!values.propertyType) {
-      errors.username = 'required';
-    }
-    if (!values.income) {
-      errors.business = 'required';
-    }
-
-    if (!values.expense) {
-      errors.email = 'required';
-    }
-
-    return errors;
   };
   return (
     <section className='bg-white'>
@@ -220,54 +219,14 @@ export const Calculator = () => {
             >
               Calculate
             </button>
-          </Form>
-          <Form>
-            <div className='ml-7'>
-              <h1 className='text-3xl'>You can borrow</h1>
-              <h2 className='text-2xl'>
+            </Form>
+            <div className=''>
+              <h1 className='text-3xl ml-5'>You can borrow</h1>
+              <h2 className='text-2xl ml-5'>
                 <span>$</span>
                 {borrowAmount}
               </h2>
-              <div className='grid gap-5 grid-cols-2'>
-                <h3 className='text-xl col-span-2'>
-                  At principal and interest repayments of
-                </h3>
-                <div className='col-span-2'>
-                  <span className='mx-2'>$x</span>
-
-                  <Field
-                    as='select'
-                    name='color'
-                    className='mx-2 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5 w-32'
-                  >
-                    <option value='Per-year'> Per Year</option>
-                    <option value='Per-month'> Per Month</option>
-                    <option value='Per-fortnight'>Per Fortnight</option>
-                  </Field>
-                  <span className='mx-2'>over</span>
-                  <Field
-                    as='select'
-                    name='color'
-                    className='mx-2 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5 w-32'
-                  >
-                    <option value='20-year'>20 Years</option>
-                    <option value='10-month'>10 Years</option>
-                    <option value='5-fortnight'>5 Years</option>
-                  </Field>
-                </div>
-                <h3 className='text-xl col-span-2'>At an interest rate of</h3>
-                <Field
-                  as='select'
-                  name='color'
-                  className='mx-2 bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 p-2.5 w-32'
-                >
-                  <option value='20%'>20%</option>
-                  <option value='10%'>10%</option>
-                  <option value='5%'>5%</option>
-                </Field>
-              </div>
             </div>
-          </Form>
         </div>
       </Formik>
     </section>
