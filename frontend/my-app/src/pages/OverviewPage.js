@@ -24,7 +24,7 @@ function OverviewPage() {
     // data fetching from backend
     // currently, i'm hosing locally (change according to port)
     useEffect(() => {
-        axios.get('http://localhost:55375/view_all')
+        axios.get('http://localhost:5000/view_all')
         .then(res => {
             setPackages(res.data.message);
         })
