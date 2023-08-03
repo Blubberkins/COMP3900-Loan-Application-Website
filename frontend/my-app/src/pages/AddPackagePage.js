@@ -11,7 +11,7 @@ const AddPackagePage = () => {
     interest_rate: '',
     ir_type: '',
     additional_payments: '',
-    redraws: ''
+    redraws: '',
   };
   const onSubmit = async (values) => {
     console.log(values);
@@ -24,13 +24,14 @@ const AddPackagePage = () => {
   };
   return (
     <section className='bg-white'>
+      <header className='flex items-center justify-between p-6 bg-blue-500'>
+        <h1 className='text-2xl font-bold text-white'>Carbon Bank</h1>
+      </header>
       <Formik initialValues={initialValues} onSubmit={onSubmit}>
-        <div className='grid max-w-4xl m-auto grid-cols-1 px-5 gap-7 mx-auto lg:px-8 divide-x md:divide-y-0 divide-y text-black'>
+        <div className='grid max-w-4xl m-auto grid-cols-1 px-5 gap-7 mx-auto lg:px-8 divide-x md:divide-y-0 divide-y text-black mt-10'>
           <Form>
             <div className='mb-6'>
-              <label
-                className='block mb-2 text-sm font-medium text-gray-900'
-              >
+              <label className='block mb-2 text-sm font-medium text-gray-900'>
                 Name of Package
               </label>
               <Field
@@ -41,9 +42,7 @@ const AddPackagePage = () => {
               />
             </div>
             <div className='mb-6'>
-              <label
-                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-              >
+              <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                 Loan value ratio
               </label>
               <Field
@@ -67,9 +66,7 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   Investment
                 </label>
               </div>
@@ -82,17 +79,13 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   Home
                 </label>
               </div>
             </div>
             <div className='mb-6'>
-              <label
-                className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-              >
+              <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                 interest rate
               </label>
               <Field
@@ -115,9 +108,7 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   fixed
                 </label>
               </div>
@@ -129,9 +120,7 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   variable
                 </label>
               </div>
@@ -148,9 +137,7 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   True
                 </label>
               </div>
@@ -162,9 +149,7 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   False
                 </label>
               </div>
@@ -181,9 +166,7 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2 dark:bg-gray-700'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   Yes
                 </label>
               </div>
@@ -195,9 +178,7 @@ const AddPackagePage = () => {
                   className='w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600'
                   required // Make the radio button required
                 />
-                <label
-                  className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-                >
+                <label className='w-full py-4 ml-2 text-sm font-medium text-gray-900 dark:text-gray-300'>
                   No
                 </label>
               </div>

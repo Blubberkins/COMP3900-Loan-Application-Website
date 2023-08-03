@@ -12,7 +12,7 @@ function DashboardPage() {
 
   return (
     <div className="h-full min-h-screen bg-white text-black px-6 py-4 overflow-auto">
-      <div className="text-3xl font-semibold">Dashboard</div>
+      <div className="text-3xl font-semibold">Home</div>
       
       <Tab.Group>
         <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">

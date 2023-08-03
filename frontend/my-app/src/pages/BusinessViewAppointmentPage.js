@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs } from 'flowbite-react';
-
+import CarbonHero from '../components/CarbonHero';
 function BusinessViewAppointmentPage() {
   const navigate = useNavigate();
   const [CurrDates, setCurrentDates] = useState([
@@ -127,6 +127,7 @@ function BusinessViewAppointmentPage() {
   }, []);
   return (
     <div>
+      <CarbonHero/>
       <h3 className='text-xl col-span-2 my-10 font-bold ml-20'>
         My Appointments
       </h3>
