@@ -26,6 +26,15 @@ function AvailableAppointments() {
       Contact: '0123456789',
       name: 'John Jonathan',
     },
+    {
+      date: '2023-08-5',
+      isOpen: false,
+      location: 'sydney',
+      timeStart: '15:00',
+      timeEnd: '16:00',
+      Contact: '0123456789',
+      name: 'John Jonathan',
+    },
   ]);
   const [appointment, setAppointmnet] = useState();
   const handleAccordionToggle = (index) => {
