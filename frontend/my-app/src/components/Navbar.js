@@ -52,6 +52,15 @@ const handleappointment = () => {
             </li>
             <li>
               <a
+                href='/home-loan'
+                className='block py-2 pl-3 pr-4 text-white rounded md:text-blue-700 md:p-0 text-xl'
+                aria-current='page'
+              >
+                Find Loan
+              </a>
+            </li>
+            <li>
+              <a
                 href='/calculator'
                 className='block py-2 pl-3 pr-4 text-black hover:bg-transparent hover:text-blue-700 md:p-0 text-xl'
               >
