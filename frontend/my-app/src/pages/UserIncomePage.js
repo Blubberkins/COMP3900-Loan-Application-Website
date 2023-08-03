@@ -1,33 +1,27 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { LoanContext } from '../contexts/LoanContext';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import Navbar from '../components/Navbar';
 
 function UserIncomePage() {
-  const [employmentStatus, setEmploymentStatus] = useState("");
-  const [salary, setSalary] = useState("");
-  const [rentalIncomeStatus, setRentalIncomeStatus] = useState("");
-  const [additionalIncome, setAdditionalIncome] = useState("");
-
   const navigate = useNavigate();
 
-  const onSubmit = async () => {
+  // Global state
+  const { loanDetails, setLoanDetails } = useContext(LoanContext);
+
+  const onSubmit = () => {
     try {
-      const response = await axios.post("http://localhost:5000/applyLoan", {
-        // page 3 takes these parameters as defined in backend
-        user_income_status: employmentStatus,
-        user_income: salary,
-        //user_rental_income_status: rentalIncomeStatus,
-        user_additional_income: additionalIncome,
+      setLoanDetails({
+        ...loanDetails,
+        user_income_status: loanDetails.employmentStatus,
+        user_income: loanDetails.salary,
+        user_rental_income_status: loanDetails.rentalIncomeStatus,
+        user_additional_income: loanDetails.additionalIncome,
         // placeholder
         income_files: ""
       });
 
-      if (response.data.message === 'Success') {
-        navigate('/page4');
-      } else {
-        console.error("Error occurred during the request: ", response.data);
-      }
+      navigate('/page4');
     } catch (error) {
       console.error("Error occurred during the request: ", error);
     }
@@ -39,7 +33,11 @@ function UserIncomePage() {
       <h1 className="font-bold text-2xl mb-4 mt-10">What you earn</h1>
 
       <h2 className="font-bold text-l mb-2">Employment status</h2>
-      <select value={employmentStatus} onChange={(e) => setEmploymentStatus(e.target.value)} className="w-full mb-4 p-2 border border-gray-300 rounded">
+      <select 
+        value={loanDetails.employmentStatus} 
+        onChange={(e) => setLoanDetails({...loanDetails, employmentStatus: e.target.value})} 
+        className="w-full mb-4 p-2 border border-gray-300 rounded"
+      >
         <option value="">Select your employment status</option>
         <option value="Full-time">Full-time</option>
         <option value="Part-time">Part-time</option>
@@ -47,18 +45,44 @@ function UserIncomePage() {
       </select>
 
       <h2 className="font-bold text-l mb-2">Income</h2>
-      <input type="number" value={salary} onChange={(e) => setSalary(e.target.value)} placeholder="Enter your salary" className="w-full mb-4 p-2 border border-gray-300 rounded" />
+      <input 
+        type="number" 
+        value={loanDetails.salary} 
+        onChange={(e) => setLoanDetails({...loanDetails, salary: e.target.value})} 
+        placeholder="Enter your salary" 
+        className="w-full mb-4 p-2 border border-gray-300 rounded" 
+      />
 
       <h2 className="font-bold text-2xl mb-2">Any current or future rental income?</h2>
       <div className="mb-4">
-        <button onClick={() => setRentalIncomeStatus("Yes")} className={`px-4 py-2 mr-2 rounded ${rentalIncomeStatus === "Yes" ? "bg-blue-500 text-white" : "border border-gray-300"}`}>Yes</button>
-        <button onClick={() => setRentalIncomeStatus("No")} className={`px-4 py-2 rounded ${rentalIncomeStatus === "No" ? "bg-blue-500 text-white" : "border border-gray-300"}`}>No</button>
+        <button 
+          onClick={() => setLoanDetails({...loanDetails, rentalIncomeStatus: "Yes"})} 
+          className={`px-4 py-2 mr-2 rounded ${loanDetails.rentalIncomeStatus === "Yes" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+        >
+          Yes
+        </button>
+        <button 
+          onClick={() => setLoanDetails({...loanDetails, rentalIncomeStatus: "No"})} 
+          className={`px-4 py-2 rounded ${loanDetails.rentalIncomeStatus === "No" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+        >
+          No
+        </button>
       </div>
 
       <h2 className="font-bold text-2xl mb-2">Any other income apart from employment?</h2>
       <div className="mb-4">
-        <button onClick={() => setAdditionalIncome("Yes")} className={`px-4 py-2 mr-2 rounded ${additionalIncome === "Yes" ? "bg-blue-500 text-white" : "border border-gray-300"}`}>Yes</button>
-        <button onClick={() => setAdditionalIncome("No")} className={`px-4 py-2 rounded ${additionalIncome === "No" ? "bg-blue-500 text-white" : "border border-gray-300"}`}>No</button>
+        <button 
+          onClick={() => setLoanDetails({...loanDetails, additionalIncome: "Yes"})} 
+          className={`px-4 py-2 mr-2 rounded ${loanDetails.additionalIncome === "Yes" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+        >
+          Yes
+        </button>
+        <button 
+          onClick={() => setLoanDetails({...loanDetails, additionalIncome: "No"})} 
+          className={`px-4 py-2 rounded ${loanDetails.additionalIncome === "No" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+        >
+          No
+        </button>
       </div>
 
       {/* placeholder */}
