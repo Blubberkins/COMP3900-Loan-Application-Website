@@ -12,17 +12,20 @@ function LoanDetailsPage() {
 
   const onSubmit = async () => {
     try {
-      setLoanDetails({
+      const updatedLoanDetails = {
         ...loanDetails,
         ir_type: loanDetails.irType,
         payment_type: loanDetails.paymentType,
         loan_term: loanDetails.loanTerm,
-      });
-
-      const response = await axios.post("http://localhost:5000/applyLoan", loanDetails);
-
+      };
+  
+      const response = await axios.post("http://localhost:5000/applyLoan", updatedLoanDetails);
+  
       if (response.data.message === 'Success') {
-        // when application is finished, redirects to homepage
+        // Update the context state with the new values
+        setLoanDetails(updatedLoanDetails);
+        
+        // When application is finished, redirects to homepage
         navigate('/home');
       } else {
         console.error("Error occurred during the request: ", response.data);
