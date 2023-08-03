@@ -10,8 +10,15 @@ function PropertyPage() {
   // Global state
   const { loanDetails, setLoanDetails } = useContext(LoanContext)
 
-  const onSubmit = async () => {
+  const onSubmit = () => {
     try {
+      setLoanDetails({
+        ...loanDetails,
+        property_type: loanDetails.propertyType,
+        loan_purpose: loanDetails.loanPurpose,
+        deposit_amount: loanDetails.depositAmount,
+      });
+
       navigate('/page2');
     } catch (error) {
       console.error("Error occurred during the request: ", error);
