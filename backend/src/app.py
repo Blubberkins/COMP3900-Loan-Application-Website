@@ -26,6 +26,8 @@ app.register_blueprint(loan_application_bank)
 app.register_blueprint(loan_application_customers)
 app.register_blueprint(loan_preferences)
 app.register_blueprint(search_package)
+app.register_blueprint(appointment_personnel)
+app.register_blueprint(appointment_customer)
 
 @app.route("/calculators/repayment", methods=['POST'])
 def calculators_repay():

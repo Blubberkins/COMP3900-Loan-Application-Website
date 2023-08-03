@@ -1,22 +1,15 @@
 import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import firestore
 from datetime import datetime
 from google.cloud.firestore_v1.base_query import FieldFilter
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 
-# Fetch the service account key JSON file contents
-# i used my own firebase for testing but will need to get the key for the group one
-cred = credentials.Certificate('secret key.json')
-# Initialize the app with a service account, granting admin privileges
-# should change permissions for the thingo but idk how
-firebase_admin.initialize_app(cred, {'databaseURL': "https://comp3900-e4af5-default-rtdb.asia-southeast1.firebasedatabase.app/"})
 db = firestore.client()
 
-app = Flask(__name__)
+appointment_personnel = Blueprint('appointment_personnel', __name__)
 
-@app.route("/view_pending", method = ['GET'])
+@appointment_personnel.route("/view_pending", method = ['GET'])
 def AP_view_pending():
     # returns the list of appointments without ids and isOpen is false
     ref = db.collection("Appointments")
@@ -33,7 +26,7 @@ def AP_view_pending():
     
     return jsonify({'message': rList})
 
-@app.route("/view_accepted", method = ['GET'])
+@appointment_personnel.route("/view_accepted", method = ['GET'])
 def AP_view_accepted():
     # given user id
     # returns the list of appointments they have accepted and are upcoming
@@ -53,7 +46,7 @@ def AP_view_accepted():
 
     return jsonify({'message': rList}) 
 
-@app.route("/accept", method = ['POST'])
+@appointment_personnel.route("/accept", method = ['POST'])
 def AP_accept():
     # given user id, and the entry they chose from view
     # updates the database
@@ -76,11 +69,11 @@ def AP_accept():
     if (len(query) == 1):
         for item in query:
             ref.document(item.id).update({'isOpen': True, 'personnel_id': personnel_id})
-            return("success")
+            return jsonify({'message': "Successfully accepted appointment"}) 
 
-    return("fail")
+    return jsonify({'message': "No such appointment"}) 
 
-@app.route("/deny", method = ['POST'])
+@appointment_personnel.route("/deny", method = ['POST'])
 def AP_deny():
     # checks the personel id is same then removes
     # the personel id from the database entry
@@ -105,11 +98,11 @@ def AP_deny():
     if (len(query) == 1):
         for item in query:
             ref.document(item.id).update({'isOpen': True, 'personnel_id': personnel_id})
-            return("success")
+            return jsonify({'message': "Successfully denied appointment"}) 
 
-    return("fail")
+    return jsonify({'message': "No such appointment"}) 
 
-@app.route("/avaliability", method = ['POST'])
+@appointment_personnel.route("/avaliability", method = ['POST'])
 def AP_avaliability():
     ref = db.collection("Avaliability")
 
@@ -142,6 +135,4 @@ def AP_avaliability():
     else:
         ref.add(entry)
 
-    return
-
-AP_avaliability()
+    return jsonify({'message': "Successfully updated avaliabilities"})

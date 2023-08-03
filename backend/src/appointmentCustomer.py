@@ -1,22 +1,15 @@
 import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import firestore
 from datetime import datetime
 from google.cloud.firestore_v1.base_query import FieldFilter
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Blueprint
 
-# Fetch the service account key JSON file contents
-# i used my own firebase for testing but will need to get the key for the group one
-cred = credentials.Certificate('secret key.json')
-# Initialize the app with a service account, granting admin privileges
-# should change permissions for the thingo but idk how
-firebase_admin.initialize_app(cred, {'databaseURL': "https://comp3900-e4af5-default-rtdb.asia-southeast1.firebasedatabase.app/"})
 db = firestore.client()
 
-app = Flask(__name__)
+appointment_customer = Blueprint('appointment_customer', __name__)
 
-@app.route("/view_avaliable", method = ['GET'])
+@appointment_customer.route("/view_avaliable", method = ['GET'])
 def AC_view_avaliable():
     # view avaliable slots
     # returns list of all avaliable upcoming slots
@@ -34,7 +27,7 @@ def AC_view_avaliable():
 
     return jsonify({'message': avaliable})
 
-@app.route("/view_my", method = ['GET'])
+@appointment_customer.route("/view_my", method = ['GET'])
 def AC_view_my():
     # view my appointments
     # - customer id
@@ -53,9 +46,9 @@ def AC_view_my():
         for item in query:
             return jsonify({'message': item.to_dict()})
     else:
-        return jsonify({'message': "No Appointments"})
+        return jsonify({'message': "No appointments"})
 
-@app.route("/view_request", method = ['POST'])
+@appointment_customer.route("/view_request", method = ['POST'])
 def AC_request():
     # request new appointment
     # - customer id, personnel id, datetime 30 min slot
@@ -89,30 +82,31 @@ def AC_request():
     )
 
     if (len(query) >= 3):
-        return("Already have multiple appointments")
+        return jsonify({'message': "Already have reached the max of 3 appointments"})
     else:
         ref.add(entry)
-        return("Added new appointment")
+        return jsonify({'message': "Added new appointment"})
 
-@app.route("/cancel", method = ['POST'])
+@appointment_customer.route("/cancel", method = ['POST'])
 def AC_cancel():
     # cancel appointment
     # - customer id, timeslot
     # returns ok if had appointment in slot
     # otherwise returns fail if no such appointment
     ref = db.collection("Appointments")
-    
+
+    timeStart = request.form.get('timeStart')
+    timeEnd = request.form.get('timeEnd')
     customer_id = request.form.get('customer_id')
     
-    now = datetime.now()
-    
     query = (ref.where(filter = FieldFilter('customer_id', '==', customer_id))
-                .where(filter = FieldFilter('timeEnd', '>', now))
+                .where(filter = FieldFilter('timeStart', '==', timeStart))
+                .where(filter = FieldFilter('timeEnd', '==', timeEnd))
                 .get()        
     )
     
     for item in query:
         ref.document(item.id).delete()
-        return(True)
+        return jsonify({'message': "Appointment cancelled"})
     else:
-        return(None)
+        return jsonify({'message': "Appointment not found"})
