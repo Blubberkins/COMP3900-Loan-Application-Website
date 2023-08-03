@@ -28,6 +28,10 @@ const RegisterC = () => {
         console.log(user);
       })
 
+      updateProfile(auth.currentUser, {
+        displayName: values.firstName
+      })
+
       navigate('/home');
     } catch (error) {
       console.error('Registration failed', error);

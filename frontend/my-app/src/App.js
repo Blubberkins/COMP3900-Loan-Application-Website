@@ -30,18 +30,27 @@ import ConfirmAppointments from './pages/ConfirmAppointmentPage';
 import BusinessAppointmentPage from './pages/BusinessAppointment';
 import BusinessViewAppointmentPage from './pages/BusinessViewAppointmentPage';
 import BusinessAvailabilitiesPage from './pages/BusinessAvailabilityPage';
+import StartPage from './pages/StartPage';
+import CalculatorPage from './pages/CalculatorPage';
+import AddPackagePage from './pages/AddPackagePage';
+
+// State management
+import { LoanProvider } from './contexts/LoanContext';
 
 function App() {
   return (
+    <LoanProvider>
     <div className="">
       <BrowserRouter>
         <Routes>
+            <Route path="/" element={<StartPage />}></Route>
             <Route path="/login" element={<LoginPage />}></Route>
             <Route path="/RegisterC" element={<RegisterC />}></Route>
             <Route path="/RegisterB" element={<RegisterB />}></Route>
             <Route path="/home" element={<ProtectedRoute> <HomePage/> </ProtectedRoute>} />
             <Route path="/SignUp" element={<AccountTypePage />}></Route>
             <Route path="/overview" element={<OverviewPage />} />
+            <Route path="/add-new-package" element={<AddPackagePage />} />
             <Route path="/edit-package/:packageId" element={<div />} />
             <Route path="/home-loan" element={<HomeLoanPage/>} />
             <Route path="/loan-results" element={<LoanResultsPage />} />
@@ -54,6 +63,7 @@ function App() {
             <Route path="/BusinessAppointment" element={<BusinessAppointmentPage/>} />
             <Route path="/BusinessViewAppointment" element={<BusinessViewAppointmentPage/>} />
             <Route path="/BusinessAvailability" element={<BusinessAvailabilitiesPage/>} />
+            <Route path="/Calculator" element={<CalculatorPage/>} />
 
             {/* loan application for customer */}
             <Route path="/page1" element={<PropertyPage />} />
@@ -69,6 +79,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </LoanProvider>
   );
 }
 

@@ -1,12 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
-import axios from 'axios';
-
 import {auth} from '../firebase';
 import {  signOut } from "firebase/auth";
-import Package from '../components/Package';
-import PackageDetail from '../components/PackageDetail';
 import '../App.css';
 
 // screen reader accessibilty
@@ -14,25 +10,28 @@ Modal.setAppElement('#root');
 
 function OverviewPage() {
     const navigate = useNavigate();
-    // modal is used for creating dialogs, lightboxes, popovers etc
-    // control appearance through different states
     const [modalIsOpen, setIsOpen] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState(null);
-
     const [packages, setPackages] = useState([]);
 
-    // data fetching from backend
-    // currently, i'm hosing locally (change according to port)
     useEffect(() => {
-        axios.get('http://localhost:55375/view_all')
-        .then(res => {
-            setPackages(res.data.message);
-        })
-        .catch(err => {
-            console.error(err);
-        });
+        initializePackages();
     }, []);
 
+    const initializePackages = () => {
+        const loanPackages = [];
+        for(let i=1; i<=8; i++) {
+            loanPackages.push({
+                loan_name: `Loan Package ${i}`,
+                lvr: `${i*10}%`,
+                loan_purpose: `Loan Purpose ${i}`,
+                ir_type: `Interest Rate Type ${i}`,
+                additional_payments: i % 2 === 0,
+                redraws: i % 3 === 0
+            });
+        }
+        setPackages(loanPackages);
+    };
 
     const openModal = (pkg) => {
         setSelectedPackage(pkg);
@@ -45,29 +44,22 @@ function OverviewPage() {
 
     const handleLogout = () => {               
         signOut(auth).then(() => {
-        // Sign-out successful.
             navigate("/");
             console.log("Signed out successfully")
             window.sessionStorage.setItem('isLogged', false);
         }).catch((error) => {
-        // An error happened.
         });
     }
 
     const handleAddNew = () => {
-        // backend logic on adding new package
         navigate('/add-new-package');
     };
 
     const handleEdit = () => {
-        // backend logic on editing package
         navigate('/edit-package');  
     };
 
     return (
-
-        // we use tailwind css to syle our HTML elements
-        // these are utility classes provided by tailwind css
         <div className="flex flex-col h-screen">
             <header className="flex items-center justify-between p-6 bg-blue-500">
                 <h1 className="text-2xl font-bold text-white">Carbon Bank</h1>
@@ -95,15 +87,12 @@ function OverviewPage() {
                 </div>
             </div>
             <Modal
-                // pop up screen when package is clicked
                 isOpen={modalIsOpen}
-                // pop up screen closed with cross or clicking outside the pop screen
                 onRequestClose={closeModal}
                 contentLabel="Package Detail"
                 className="m-auto w-1/2 mt-10 p-5 border-2 border-gray-300"
                 >
                 <button
-                // cross button is implemeneted
                     className="absolute right-3 top-3 text-xl font-bold focus:outline-none"
                     onClick={closeModal}
                 >
@@ -116,7 +105,7 @@ function OverviewPage() {
                     >
                     Edit/New Package
                     </button>
-                    <h2 className="font-bold text-xl mt-3">{selectedPackage?.title}</h2>
+                    <h2 className="font-bold text-xl mt-3">{selectedPackage?.loan_name}</h2>
                 </div>
                 <div className="mt-3">
                     <p className="mt-2">Loan to value ratio: {selectedPackage?.lvr}</p>

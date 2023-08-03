@@ -2,34 +2,38 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function AvailableAppointments() {
   const navigate = useNavigate();
   const { year, month, day } = useParams();
   const [Dates, setDates] = useState([
     {
+      date: '2023-08-5',
       isOpen: false,
-      location: "sydney",
-      timeStart: "6:45",
-      timeEnd: "7:30",
-      Contact: "09019032",
-      name: "Bob Smith",
+      location: 'sydney',
+      timeStart: '10:00',
+      timeEnd: '11:00',
+      Contact: '0123456789',
+      name: 'John Jonathan',
     },
     {
+      date: '2023-08-5',
       isOpen: false,
-      location: "sydney",
-      timeStart: "6:45",
-      timeEnd: "7:30",
-      Contact: "09019032",
-      name: "Bob Smith",
+      location: 'sydney',
+      timeStart: '14:00',
+      timeEnd: '15:00',
+      Contact: '0123456789',
+      name: 'John Jonathan',
     },
     {
+      date: '2023-08-5',
       isOpen: false,
-      location: "sydney",
-      timeStart: "6:45",
-      timeEnd: "7:30",
-      Contact: "09019032",
-      name: "Bob Smith",
+      location: 'sydney',
+      timeStart: '15:00',
+      timeEnd: '16:00',
+      Contact: '0123456789',
+      name: 'John Jonathan',
     },
   ]);
   const [appointment, setAppointmnet] = useState();
@@ -51,6 +55,7 @@ function AvailableAppointments() {
   }, []);
   return (
     <div>
+      <Navbar/>
       <div>
       <h3 className='text-xl col-span-2 my-10 font-bold ml-20'>
         Available Appointments

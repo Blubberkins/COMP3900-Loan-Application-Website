@@ -1,38 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Tabs } from 'flowbite-react';
-
+import CarbonHero from '../components/CarbonHero';
 function BusinessViewAppointmentPage() {
   const navigate = useNavigate();
   const [CurrDates, setCurrentDates] = useState([
     {
-      date: '2023-07-17',
+      date: '2023-08-5',
       isOpen: false,
       location: 'sydney',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
-      Enquiry: 'want loan',
-    },
-    {
-      date: '2023-07-17',
-      isOpen: false,
-      location: 'sydney',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
-      Enquiry: 'want loan',
-    },
-    {
-      date: '2023-07-17',
-      isOpen: false,
-      location: 'sydney',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
+      timeStart: '10:00',
+      timeEnd: '11:00',
+      Contact: '0123456789',
+      name: 'John Jonathan',
       Enquiry: 'want loan',
     },
   ]);
@@ -127,6 +107,7 @@ function BusinessViewAppointmentPage() {
   }, []);
   return (
     <div>
+      <CarbonHero/>
       <h3 className='text-xl col-span-2 my-10 font-bold ml-20'>
         My Appointments
       </h3>

@@ -19,6 +19,7 @@ const LoginPage = () => {
         const user = userCredential.user;
         console.log(user)
         window.sessionStorage.setItem('isLogged', true);
+        window.sessionStorage.setItem('name', user.displayName)
         setAuthenticated(true);
         if (user.displayName == "business") {
           navigate('/businessHome');

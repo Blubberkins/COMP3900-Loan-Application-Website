@@ -1,17 +1,21 @@
 import React from 'react';
 import DashboardOverviewChart from './DashboardOverviewChart';
 
-
 function DashboardOverview() {
   // use placeholders for now
-  const loanVolume = 500;
-  const loanApprovalRate = 0.85;
-  const loanDelinquencyRate = 0.1;
-  const averageLoanSize = 2000;
+  const loanApprovalRate = 1.0;
+  const loanDelinquencyRate = 0;
+  const averageLoanSize = 200000;
 
-  // sample data for pie charts
   const loanVolumeData = [
-    { name: 'Loan Volume', value: loanVolume },
+    { name: 'Loan Category 1', value: Math.floor(Math.random() * 50) },
+    { name: 'Loan Category 2', value: Math.floor(Math.random() * 120) },
+    { name: 'Loan Category 3', value: Math.floor(Math.random() * 130) },
+    { name: 'Loan Category 4', value: Math.floor(Math.random() * 100) },
+    { name: 'Loan Category 5', value: Math.floor(Math.random() * 100) },
+    { name: 'Loan Category 6', value: Math.floor(Math.random() * 100) },
+    { name: 'Loan Category 7', value: Math.floor(Math.random() * 100) },
+    { name: 'Loan Category 8', value: Math.floor(Math.random() * 100) },
   ];
 
   const loanApprovalRateData = [
@@ -32,7 +36,6 @@ function DashboardOverview() {
       <div className="grid grid-cols-2 gap-4">
         <div>
           <h3 className="text-xl font-semibold mb-2">Loan volume</h3>
-          <p>{loanVolume}</p>
           <DashboardOverviewChart data={loanVolumeData} />
         </div>
         <div>

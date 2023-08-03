@@ -1,20 +1,11 @@
-import firebase_admin
-from firebase_admin import credentials
 from firebase_admin import db
 
-from flask import Flask, request, jsonify
+from flask import request, jsonify, Blueprint
 
-# Fetch the service account key JSON file contents
-# i used my own firebase for testing but will need to get the key for the group one
-cred = credentials.Certificate('secret key.json')
-# Initialize the app with a service account, granting admin privileges
-# should change permissions for the thingo but idk how
-firebase_admin.initialize_app(cred, {'databaseURL': "https://comp3900-e4af5-default-rtdb.asia-southeast1.firebasedatabase.app/"})
-
-app = Flask(__name__)
+loan_package = Blueprint('loan_package', __name__)
 
 # Main Functions
-@app.route("/new", method = ['POST'])
+@loan_package.route("/new", methods = ['POST'])
 def LP_new():
     ref = LP_set_ref()
     loanInfo = LP_get()
@@ -24,7 +15,7 @@ def LP_new():
     ref.push().set(loanInfo)
     return jsonify({'message': 'Success'})
 
-@app.route("/edit", method = ['POST'])
+@loan_package.route("/edit", methods = ['POST'])
 def LP_edit():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -46,7 +37,21 @@ def LP_edit():
     else:
         return jsonify({'message': 'Package Not Found'})
 
-@app.route("/view", method = ['GET'])
+@loan_package.route("/remove", methods = ['POST'])
+def LP_remove():
+    ref = LP_set_ref()
+    loanName = request.form.get("loan_name")
+
+    loans = ref.get()
+    for key, info in loans.items():
+        if (info["loan_name"] == loanName):
+            deleteRef = ref.child(key)
+            deleteRef.delete()
+            return ({'message': 'Success'})
+
+    return ({'message': 'Package Not Found'})
+
+@loan_package.route("/view", methods = ['GET'])
 def LP_view():
     ref = LP_set_ref()
     loanName = request.form.get("loan_name")
@@ -57,7 +62,7 @@ def LP_view():
             return jsonify({'message': info})
     return jsonify({'message': 'Package Not Found'})
 
-@app.route("/view_all", method = ['GET'])
+@loan_package.route("/view_all", methods = ['GET'])
 def LP_view_all():
     ref = LP_set_ref()
     loans = ref.get()
@@ -69,17 +74,31 @@ def LP_set_ref():
     return db.reference("/CarbonBank/Loan_Packages")
 
 def LP_get():
+    payload = request.get_json()
+    if payload["additional_payments"] == 'true':
+        payload["additional_payments"] = True
+    if payload["additional_payments"] == 'false':
+        payload["additional_payments"] = False
+    if payload["redraws"] == 'true':
+        payload["redraws"] = True
+    if payload["redraws"] == 'false':
+        payload["redraws"] = False
+    if isinstance(payload.get("interest_rate"), int):
+        payload["interest_rate"] = float(payload["interest_rate"])
+    if isinstance(payload.get("lvr"), int):
+        payload["lvr"] = float(payload["lvr"])
+    print(payload)
     return {
-        "loan_name" : request.form.get("loan_name"),
-        "lvr" : request.form.get("lvr"),
-        "loan_purpose" : request.form.get("loan_purpose"),
-        "interest_rate" : request.form.get("interest_rate"),
-        "ir_type" : request.form.get("ir_type"),
-        "additional_payments" : request.form.get("additional_payments"),
-        "redraws" : request.form.get("redraws")
+        "loan_name" : payload["loan_name"],
+        "lvr" : payload["lvr"],
+        "loan_purpose" : payload["loan_purpose"],
+        "interest_rate" : payload["interest_rate"],
+        "ir_type" : payload["ir_type"],
+        "additional_payments" : payload["additional_payments"],
+        "redraws" : payload["redraws"]
     }
 
-@app.route("/repayment", method = ['Get'])
+@loan_package.route("/repayment", methods = ['GET'])
 def LP_repayment():
     ref = LP_set_ref()
     loans = ref.get()
