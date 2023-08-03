@@ -20,7 +20,7 @@ function LoanResults() {
     }
 
     const handleSearch = () => {
-        axios.post('/search', {
+        axios.post('http://localhost:5000/search', {
             estimated_value: propertyValue,
             borrowing_amount: borrowingAmount
         })
