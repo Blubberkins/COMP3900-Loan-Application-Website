@@ -18,7 +18,7 @@ function LoanDetailsPage() {
         payment_type: loanDetails.paymentType,
         loan_term: loanDetails.loanTerm,
       });
-
+      console.log(loanDetails)
       const response = await axios.post("http://localhost:5000/applyLoan", loanDetails);
 
       if (response.data.message === 'Success') {
