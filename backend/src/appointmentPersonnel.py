@@ -5,12 +5,11 @@ from google.cloud.firestore_v1.base_query import FieldFilter
 
 from flask import Flask, request, jsonify, Blueprint
 
-db = firestore.client()
-
 appointment_personnel = Blueprint('appointment_personnel', __name__)
 
 @appointment_personnel.route("/view_pending", method = ['GET'])
 def AP_view_pending():
+    db = firestore.client()
     # returns the list of appointments without ids and isOpen is false
     ref = db.collection("Appointments")
     now = datetime.now()
@@ -28,6 +27,7 @@ def AP_view_pending():
 
 @appointment_personnel.route("/view_accepted", method = ['GET'])
 def AP_view_accepted():
+    db = firestore.client()
     # given user id
     # returns the list of appointments they have accepted and are upcoming
     ref = db.collection("Appointments")
@@ -48,6 +48,7 @@ def AP_view_accepted():
 
 @appointment_personnel.route("/accept", method = ['POST'])
 def AP_accept():
+    db = firestore.client()
     # given user id, and the entry they chose from view
     # updates the database
     ref = db.collection("Appointments")
@@ -75,6 +76,7 @@ def AP_accept():
 
 @appointment_personnel.route("/deny", method = ['POST'])
 def AP_deny():
+    db = firestore.client()
     # checks the personel id is same then removes
     # the personel id from the database entry
     # returns errors if doesnt match, etc.
@@ -104,6 +106,7 @@ def AP_deny():
 
 @appointment_personnel.route("/avaliability", method = ['POST'])
 def AP_avaliability():
+    db = firestore.client()
     ref = db.collection("Avaliability")
 
     # Fetch from frontend

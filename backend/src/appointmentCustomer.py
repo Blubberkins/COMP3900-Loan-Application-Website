@@ -5,12 +5,11 @@ from google.cloud.firestore_v1.base_query import FieldFilter
 
 from flask import Flask, request, jsonify, Blueprint
 
-db = firestore.client()
-
 appointment_customer = Blueprint('appointment_customer', __name__)
 
 @appointment_customer.route("/view_avaliable", method = ['GET'])
 def AC_view_avaliable():
+    db = firestore.client()
     # view avaliable slots
     # returns list of all avaliable upcoming slots
     ref = db.collection("Avaliability")
@@ -29,6 +28,7 @@ def AC_view_avaliable():
 
 @appointment_customer.route("/view_my", method = ['GET'])
 def AC_view_my():
+    db = firestore.client()
     # view my appointments
     # - customer id
     # returns the list of all upcoming appointments for customer
@@ -50,6 +50,7 @@ def AC_view_my():
 
 @appointment_customer.route("/view_request", method = ['POST'])
 def AC_request():
+    db = firestore.client()
     # request new appointment
     # - customer id, personnel id, datetime 30 min slot
     # returns ok if has space in that timeslot (up to 5 per slot)
@@ -89,6 +90,7 @@ def AC_request():
 
 @appointment_customer.route("/cancel", method = ['POST'])
 def AC_cancel():
+    db = firestore.client()
     # cancel appointment
     # - customer id, timeslot
     # returns ok if had appointment in slot
