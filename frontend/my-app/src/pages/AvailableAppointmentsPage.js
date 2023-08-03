@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import Navbar from "../components/Navbar";
 
 function AvailableAppointments() {
   const navigate = useNavigate();
@@ -51,6 +52,7 @@ function AvailableAppointments() {
   }, []);
   return (
     <div>
+      <Navbar/>
       <div>
       <h3 className='text-xl col-span-2 my-10 font-bold ml-20'>
         Available Appointments

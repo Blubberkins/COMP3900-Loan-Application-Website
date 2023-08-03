@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import CarbonHero from '../components/CarbonHero';
 
 function BusinessAvailabilitiesPage() {
     const [availabilities, setAvailabilities] = useState({
@@ -65,6 +66,7 @@ function BusinessAvailabilitiesPage() {
     
       return (
         <div>
+          <CarbonHero/>
           <h3 className='text-xl font-bold my-4'>Set Availabilities</h3>
           <form onSubmit={handleSubmit}>
             <div className='grid grid-cols-6 gap-2 mr-10'>

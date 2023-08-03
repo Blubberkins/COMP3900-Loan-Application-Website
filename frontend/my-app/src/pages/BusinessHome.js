@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import CarbonHero from '../components/CarbonHero';
+import DashboardPage from './DashboardPage';
 
 const BusinessHomePage = () => {
   const navigate = useNavigate();
@@ -22,17 +24,8 @@ const BusinessHomePage = () => {
   };
   return (
     <div>
-      BusinessHome
-      <div className='block'>
-        <button onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-      <div>
-        <button onClick={handleAppointment}>
-          Appointments
-        </button>
-      </div>
+      <CarbonHero/>
+      <DashboardPage/>
     </div>
   );
 };
