@@ -35,32 +35,32 @@ const Home = () => {
     <>
       <Navbar />
       <section class='bg-gray-50'>
-        <div class='mx-auto max-w-screen-xl px-4 py-32 lg:flex lg:h-screen lg:items-center'>
+        <div class='mx-auto max-w-screen-xl px-4 py-32 flex h-screen items-center'>
           <div class='mx-auto max-w-xl text-center'>
-            <h1 class='text-3xl font-extrabold sm:text-5xl mb-5'>
+            <h1 class='font-extrabold text-5xl mb-5'>
               Hello {userName}
-              <strong class='font-extrabold text-red-700 sm:block mt-10'>
+              <strong class='font-extrabold text-red-700 block mt-10'>
                 Your Journey Starts here
               </strong>
             </h1>
 
-            <p class='mt-4 sm:text-xl/relaxed'>
+            <p class='mt-4 text-xl/relaxed'>
               Your path to homeownership and financial empowerment starts here.
               Whether you're taking your first steps or you're well-versed in
-              the mortgage process, SecureHaven Mortgage Bank is here to guide
+              the mortgage process, Carbon Mortgage Bank is here to guide
               you with expertise and unwavering support.
             </p>
 
             <div class='mt-8 flex flex-wrap justify-center gap-4'>
               <a
-                class='block w-full rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700 focus:outline-none focus:ring active:bg-red-500 sm:w-auto'
-                href='/get-started'
+                class='block rounded bg-red-600 px-12 py-3 text-sm font-medium text-white shadow hover:bg-red-700 focus:outline-none focus:ring active:bg-red-500 w-auto'
+                href='/appointment'
               >
                 Get Started
               </a>
 
               <a
-                class='block w-full rounded px-12 py-3 text-sm font-medium text-red-600 shadow hover:text-red-700 focus:outline-none focus:ring active:text-red-500 sm:w-auto'
+                class='block rounded px-12 py-3 text-sm font-medium text-red-600 shadow hover:text-red-700 focus:outline-none focus:ring active:text-red-500 w-auto'
                 href='/about'
               >
                 Learn More
