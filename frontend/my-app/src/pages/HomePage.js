@@ -3,8 +3,10 @@ import {  signOut } from "firebase/auth";
 import {auth} from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { Calculator } from '../components/Calculator';
+import Navbar from '../components/Navbar';
  
 const Home = () => {
+    const userName = window.sessionStorage.getItem('userName');
     const navigate = useNavigate();
  
     const handleLogout = () => {               
@@ -27,14 +29,15 @@ const Home = () => {
    
     return(
         <>
+        <Navbar/>
             <nav>
                 <p>
                     Welcome Home
                 </p>
  
                 <div>
-        			<button onClick={handleLogout}>
-                        Logout
+        			<button>
+                        {userName}
                     </button>
         		</div>
                 <div>
@@ -43,7 +46,6 @@ const Home = () => {
                     </button>
         		</div>
             </nav>
-            <Calculator></Calculator>
         </>
         
     )

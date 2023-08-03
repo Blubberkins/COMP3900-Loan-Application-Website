@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../components/Navbar';
 
 function UserAssetsPage() {
   const [userBankAccounts, setUserBankAccounts] = useState("");
@@ -32,7 +33,8 @@ function UserAssetsPage() {
 
   return (
     <div className="m-4">
-      <h1 className="font-bold text-2xl mb-4">Do you have bank accounts?</h1>
+      <Navbar/>
+      <h1 className="font-bold text-2xl mb-4 mt-10">Do you have bank accounts?</h1>
 
       <div className="mb-4">
         <button onClick={() => setUserBankAccounts("Yes")} className={`px-4 py-2 mr-2 rounded ${userBankAccounts === "Yes" ? "bg-blue-500 text-white" : "border border-gray-300"}`}>Yes</button>
