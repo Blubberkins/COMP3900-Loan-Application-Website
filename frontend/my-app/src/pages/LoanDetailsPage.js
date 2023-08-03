@@ -12,7 +12,13 @@ function LoanDetailsPage() {
 
   const onSubmit = async () => {
     try {
-      // On the last page, send all the data to the backend
+      setLoanDetails({
+        ...loanDetails,
+        ir_type: loanDetails.irType,
+        payment_type: loanDetails.paymentType,
+        loan_term: loanDetails.loanTerm,
+      });
+
       const response = await axios.post("http://localhost:5000/applyLoan", loanDetails);
 
       if (response.data.message === 'Success') {
