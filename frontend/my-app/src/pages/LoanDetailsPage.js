@@ -18,9 +18,9 @@ function LoanDetailsPage() {
         payment_type: loanDetails.payment_type,
         loan_term: loanDetails.loan_term,
       };
-  
-      const response = await axios.post("http://localhost:5000/applyLoan", updatedLoanDetails);
-  
+      console.log(loanDetails)
+      const response = await axios.post("http://localhost:5000/applyLoan", loanDetails);
+
       if (response.data.message === 'Success') {
         // Update the context state with the new values
         setLoanDetails(updatedLoanDetails);
