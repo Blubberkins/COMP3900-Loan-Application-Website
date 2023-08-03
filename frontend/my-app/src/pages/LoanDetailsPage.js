@@ -20,17 +20,22 @@ function LoanDetailsPage() {
     setShowModal(true);
     setSending(true);
     try {
-      const response = await axios.post("http://localhost:5000/applyLoan", {
-        // page 5 takes these parameters as defined in backend
-        ir_type: irType,
-        payment_type: paymentType,
-        loan_term: loanTerm,
-      });
+      const updatedLoanDetails = {
+        ...loanDetails,
+        ir_type: loanDetails.ir_type,
+        payment_type: loanDetails.payment_type,
+        loan_term: loanDetails.loan_term,
+      };
+      const response = await axios.post("http://localhost:5000/applyLoan", loanDetails);
+
       setSending(false);
       setTimeout(() => {
         setShowModal(false);
       }, 4000);
+
       if (response.data.message === 'Success') {
+        // Update the context state with the new values
+        setLoanDetails(updatedLoanDetails);
         // when application is finished, redirects to homepage
         setTimeout(() => {
         navigate('/home');
