@@ -24,7 +24,7 @@ function HomeLoanForm() {
             redraws: active.redraws,
         };
 
-        axios.post('http://localhost:5000/preferences', preferences)
+        axios.post('/preferences', preferences)
             .then(response => {
                 console.log(response.data);
                 navigate('/loan-results');
