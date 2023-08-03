@@ -34,8 +34,12 @@ import StartPage from './pages/StartPage';
 import CalculatorPage from './pages/CalculatorPage';
 import AddPackagePage from './pages/AddPackagePage';
 
+// State management
+import { LoanProvider } from './contexts/LoanContext';
+
 function App() {
   return (
+    <LoanProvider>
     <div className="">
       <BrowserRouter>
         <Routes>
@@ -75,6 +79,7 @@ function App() {
         </Routes>
       </BrowserRouter>
     </div>
+    </LoanProvider>
   );
 }
 

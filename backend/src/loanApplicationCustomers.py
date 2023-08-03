@@ -13,7 +13,7 @@ def applyLoan():
 
     # gets user input for loan application details, sorted into various sections
     input_data = request.get_json()
-
+    print(input_data)
     # loan details
     property_type = input_data.get('property_type')
     loan_purpose = input_data.get('loan_purpose')
@@ -87,7 +87,7 @@ def applyLoan():
     }
 
     # add to the database with the new loan application details
-    ref.update(loanApplication)
+    ref.push().set(loanApplication)
 
     # return success message when complete
     return jsonify({'message': 'Success'})
