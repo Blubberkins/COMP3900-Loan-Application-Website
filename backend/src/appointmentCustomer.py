@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify, Blueprint
 
 appointment_customer = Blueprint('appointment_customer', __name__)
 
-@appointment_customer.route("/view_avaliable", method = ['GET'])
+@appointment_customer.route("/view_avaliable", methods = ['GET'])
 def AC_view_avaliable():
     db = firestore.client()
     # view avaliable slots
@@ -26,7 +26,7 @@ def AC_view_avaliable():
 
     return jsonify({'message': avaliable})
 
-@appointment_customer.route("/view_my", method = ['GET'])
+@appointment_customer.route("/view_my", methods = ['GET'])
 def AC_view_my():
     db = firestore.client()
     # view my appointments
@@ -48,7 +48,7 @@ def AC_view_my():
     else:
         return jsonify({'message': "No appointments"})
 
-@appointment_customer.route("/view_request", method = ['POST'])
+@appointment_customer.route("/view_request", methods = ['POST'])
 def AC_request():
     db = firestore.client()
     # request new appointment
@@ -88,7 +88,7 @@ def AC_request():
         ref.add(entry)
         return jsonify({'message': "Added new appointment"})
 
-@appointment_customer.route("/cancel", method = ['POST'])
+@appointment_customer.route("/cancel", methods = ['POST'])
 def AC_cancel():
     db = firestore.client()
     # cancel appointment

@@ -7,7 +7,7 @@ from flask import Flask, request, jsonify, Blueprint
 
 appointment_personnel = Blueprint('appointment_personnel', __name__)
 
-@appointment_personnel.route("/view_pending", method = ['GET'])
+@appointment_personnel.route("/view_pending", methods = ['GET'])
 def AP_view_pending():
     db = firestore.client()
     # returns the list of appointments without ids and isOpen is false
@@ -25,7 +25,7 @@ def AP_view_pending():
     
     return jsonify({'message': rList})
 
-@appointment_personnel.route("/view_accepted", method = ['GET'])
+@appointment_personnel.route("/view_accepted", methods = ['GET'])
 def AP_view_accepted():
     db = firestore.client()
     # given user id
@@ -46,7 +46,7 @@ def AP_view_accepted():
 
     return jsonify({'message': rList}) 
 
-@appointment_personnel.route("/accept", method = ['POST'])
+@appointment_personnel.route("/accept", methods = ['POST'])
 def AP_accept():
     db = firestore.client()
     # given user id, and the entry they chose from view
@@ -74,7 +74,7 @@ def AP_accept():
 
     return jsonify({'message': "No such appointment"}) 
 
-@appointment_personnel.route("/deny", method = ['POST'])
+@appointment_personnel.route("/deny", methods = ['POST'])
 def AP_deny():
     db = firestore.client()
     # checks the personel id is same then removes
@@ -104,7 +104,7 @@ def AP_deny():
 
     return jsonify({'message': "No such appointment"}) 
 
-@appointment_personnel.route("/avaliability", method = ['POST'])
+@appointment_personnel.route("/avaliability", methods = ['POST'])
 def AP_avaliability():
     db = firestore.client()
     ref = db.collection("Avaliability")
