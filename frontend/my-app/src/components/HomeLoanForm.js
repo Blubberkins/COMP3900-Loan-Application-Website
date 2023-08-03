@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 function HomeLoanForm() {
     const navigate = useNavigate();
@@ -16,7 +17,21 @@ function HomeLoanForm() {
     }
 
     const handleFindLoan = () => {
-        navigate('/loan-results');
+        const preferences = {
+            loan_purpose: active.purpose,
+            ir_type: active.interestRate,
+            additional_payments: active.additionalPayments,
+            redraws: active.redraws,
+        };
+
+        axios.post('http://localhost:5000/preferences', preferences)
+            .then(response => {
+                console.log(response.data);
+                navigate('/loan-results');
+            })
+            .catch(error => {
+                console.error(error);
+            });
     };
 
     return (
