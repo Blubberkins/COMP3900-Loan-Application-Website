@@ -6,9 +6,15 @@ import Navbar from '../components/Navbar';
 function ViewAppointmentPage() {
   const navigate = useNavigate();
   const [CurrDates, setCurrentDates] = useState([
-    { date: '2023-07-17', isOpen: false, location: "sydney", timeStart: "6:45", timeEnd: "7:30", Contact: "09019032", name: "Bob Smith"},
-    { date: '2023-07-17', isOpen: false, location: "sydney", timeStart: "6:45", timeEnd: "7:30", Contact: "09019032", name: "Bob Smith"},
-    { date: '2023-07-17', isOpen: false, location: "sydney", timeStart: "6:45", timeEnd: "7:30", Contact: "09019032", name: "Bob Smith"},
+    {
+      date: '2023-08-5',
+      isOpen: false,
+      location: 'sydney',
+      timeStart: '10:00',
+      timeEnd: '11:00',
+      Contact: '0123456789',
+      name: 'John Jonathan',
+    },
   ]);
   const [PastDates, setPastDates] = useState([
     { date: '2023-07-17', isOpen: false, location: "Perth", timeStart: "6:45", timeEnd: "7:30", Contact: "09019032", name: "Bob Smith"},
