@@ -6,36 +6,6 @@ function BusinessViewAppointmentPage() {
   const navigate = useNavigate();
   const [CurrDates, setCurrentDates] = useState([
     {
-      date: '2023-08-17',
-      isOpen: false,
-      location: 'sydney',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
-      Enquiry: 'want loan',
-    },
-    {
-      date: '2023-08-17',
-      isOpen: false,
-      location: 'sydney',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
-      Enquiry: 'want loan',
-    },
-    {
-      date: '2023-08-17',
-      isOpen: false,
-      location: 'sydney',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
-      Enquiry: 'want loan',
-    },
-    {
       date: '2023-08-5',
       isOpen: false,
       location: 'sydney',
