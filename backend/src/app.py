@@ -23,6 +23,8 @@ from loanApplicationBank import loan_application_bank
 from loanApplicationCustomers import loan_application_customers
 from loanPreferences import loan_preferences
 from searchPackage import search_package
+from appointmentCustomer import appointment_customer
+from appointmentPersonnel import appointment_personnel
 
 app = Flask(__name__)
 CORS(app)
