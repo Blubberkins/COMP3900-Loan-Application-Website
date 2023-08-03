@@ -18,33 +18,13 @@ function BusinessViewAppointmentPage() {
   ]);
   const [PastDates, setPastDates] = useState([
     {
-      date: '2023-07-17',
-      isOpen: false,
-      location: 'Perth',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
-      Enquiry: 'want loan',
-    },
-    {
-      date: '2023-07-17',
-      isOpen: false,
-      location: 'Melbourne',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
-      Enquiry: 'want loan',
-    },
-    {
-      date: '2023-07-17',
+      date: '2023-08-5',
       isOpen: false,
       location: 'sydney',
-      timeStart: '6:45',
-      timeEnd: '7:30',
-      Contact: '09019032',
-      name: 'Bob Smith',
+      timeStart: '10:00',
+      timeEnd: '11:00',
+      Contact: '0123456789',
+      name: 'John Jonathan',
       Enquiry: 'want loan',
     },
   ]);
