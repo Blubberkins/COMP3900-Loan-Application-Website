@@ -18,6 +18,11 @@ default_app = firebase_admin.initialize_app(cred_obj, {
                                             'databaseURL': 'https://carbon-532ae-default-rtdb.asia-southeast1.firebasedatabase.app/'})
 
 # import all backend functions except calculators (functions for calc are integrated into app.py)
+from loan_package import loan_package
+from loanApplicationBank import loan_application_bank
+from loanApplicationCustomers import loan_application_customers
+from loanPreferences import loan_preferences
+from searchPackage import search_package
 
 app = Flask(__name__)
 CORS(app)
