@@ -12,17 +12,20 @@ function LoanDetailsPage() {
 
   const onSubmit = async () => {
     try {
-      setLoanDetails({
+      const updatedLoanDetails = {
         ...loanDetails,
-        ir_type: loanDetails.irType,
-        payment_type: loanDetails.paymentType,
-        loan_term: loanDetails.loanTerm,
-      });
+        ir_type: loanDetails.ir_Type,
+        payment_type: loanDetails.payment_type,
+        loan_term: loanDetails.loan_term,
+      };
       console.log(loanDetails)
       const response = await axios.post("http://localhost:5000/applyLoan", loanDetails);
 
       if (response.data.message === 'Success') {
-        // when application is finished, redirects to homepage
+        // Update the context state with the new values
+        setLoanDetails(updatedLoanDetails);
+        
+        // When application is finished, redirects to homepage
         navigate('/home');
       } else {
         console.error("Error occurred during the request: ", response.data);
@@ -39,14 +42,14 @@ function LoanDetailsPage() {
 
       <div className="mb-4">
         <button 
-          onClick={() => setLoanDetails({...loanDetails, irType: "Variable"})} 
-          className={`px-4 py-2 mr-2 rounded ${loanDetails.irType === "Variable" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+          onClick={() => setLoanDetails({...loanDetails, ir_type: "Variable"})} 
+          className={`px-4 py-2 mr-2 rounded ${loanDetails.ir_type === "Variable" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
         >
           Variable
         </button>
         <button 
-          onClick={() => setLoanDetails({...loanDetails, irType: "Fixed"})} 
-          className={`px-4 py-2 rounded ${loanDetails.irType === "Fixed" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+          onClick={() => setLoanDetails({...loanDetails, ir_type: "Fixed"})} 
+          className={`px-4 py-2 rounded ${loanDetails.ir_type === "Fixed" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
         >
           Fixed
         </button>
@@ -55,14 +58,14 @@ function LoanDetailsPage() {
       <h2 className="font-bold text-2xl mb-2">Type of payment?</h2>
       <div className="mb-4">
         <button 
-          onClick={() => setLoanDetails({...loanDetails, paymentType: "Principal and interest"})} 
-          className={`px-4 py-2 mr-2 rounded ${loanDetails.paymentType === "Principal and interest" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+          onClick={() => setLoanDetails({...loanDetails, payment_type: "Principal and interest"})} 
+          className={`px-4 py-2 mr-2 rounded ${loanDetails.payment_type === "Principal and interest" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
         >
           Principal and interest
         </button>
         <button 
-          onClick={() => setLoanDetails({...loanDetails, paymentType: "Interest only"})} 
-          className={`px-4 py-2 rounded ${loanDetails.paymentType === "Interest only" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
+          onClick={() => setLoanDetails({...loanDetails, payment_type: "Interest only"})} 
+          className={`px-4 py-2 rounded ${loanDetails.payment_type === "Interest only" ? "bg-blue-500 text-white" : "border border-gray-300"}`}
         >
           Interest only
         </button>
@@ -71,8 +74,8 @@ function LoanDetailsPage() {
       <h2 className="font-bold text-2xl mb-2">Loan term</h2>
       <input 
         type="number" 
-        value={loanDetails.loanTerm} 
-        onChange={(e) => setLoanDetails({...loanDetails, loanTerm: e.target.value})} 
+        value={loanDetails.loan_term} 
+        onChange={(e) => setLoanDetails({...loanDetails, loan_term: e.target.value})} 
         placeholder="Enter loan term in years" 
         className="w-full mb-10 p-2 border border-gray-300 rounded" 
       />
